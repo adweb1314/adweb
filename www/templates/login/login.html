@@ -1,0 +1,20 @@
+<ion-view view-title="景观大众点评">
+  <ion-content padding="true" class="has-header">
+
+    <div class="padding">
+      <label class="item item-input item-floating-label">
+        <span class="input-label">用户ID：</span>
+        <input type="text" placeholder="用户ID" ng-model="user_id"/>
+      </label>
+      <label class="item item-input item-floating-label">
+        <span class="input-label">用户密码：</span>
+        <input type="password" placeholder="用户密码" ng-model="user_password"/>
+      </label>
+
+      <input class="button button-block button-positive" type="button" ng-click="login(user_id,user_password)" value="登录"/>
+
+      <a class="button button-block button-stable" type="button"  href="#/register" >注册</a>
+    </div>
+
+  </ion-content>
+</ion-view>
