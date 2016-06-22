@@ -1,7 +1,7 @@
 {
-  "name": "adweblab1",
+  "name": "adweb",
   "version": "1.1.1",
-  "description": "adweblab1: An Ionic project",
+  "description": "adweb: An Ionic project",
   "dependencies": {
     "gulp": "^3.5.6",
     "gulp-sass": "^2.0.4",
@@ -23,7 +23,6 @@
     "ionic-plugin-keyboard"
   ],
   "cordovaPlatforms": [
-    "ios",
     "android"
   ]
 }
