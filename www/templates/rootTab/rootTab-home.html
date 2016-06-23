@@ -1,16 +1,16 @@
 <ion-view view-title="景观大众点评">
   <ion-nav-buttons side="right">
-    <a class="button icon ion-ios-home" href="#/rootTab/home"></a>
     <button class="button icon ion-android-menu" ng-click="openPopover($event)"></button>
+    <a class="button icon ion-ios-home" href="#/rootTab/home"></a>
   </ion-nav-buttons>
   <ion-content>
     <div class="padding my-computer-view">
 
-      <item ng-show="!expand" class="item item-image" ng-click="doExpand()">
+      <item ng-show="!expand&&!loading" class="item item-image" ng-click="doExpand()">
         <span class="icon ion-ios-arrow-up"></span>
         检索菜单
       </item>
-      <item ng-show="expand" class="item item-image" ng-click="cancelExpand()">
+      <item ng-show="expand&&!loading" class="item item-image" ng-click="cancelExpand()">
         <span class="icon ion-ios-arrow-down"></span>
         检索完毕
       </item>
@@ -35,7 +35,11 @@
         {{ item.text }}
       </ion-checkbox>
 
-      <div class="item my-map-wrapper">
+      <div ng-show="loading" class="item item-text-wrap text-center">
+        定位中...
+      </div>
+
+      <div ng-show="!loading" class="item my-map-wrapper">
         <!--<baidu-map id="baidu-map" options="mapOptions" ak="7EZoSoWRPRCTaK36Q7vgSGVN506t6WM9" offline="offlineOpts" on-map-loaded="loadMap(map)"></baidu-map>-->
         <div id="container"></div>
       </div>

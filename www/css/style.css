@@ -40,6 +40,10 @@ ion-content {
   padding: 0;
 }
 
+.my-no-padding-bottom{
+  padding-bottom: 0;
+}
+
 .my-button-right {
   line-height: 2em;
   min-height: 0;
@@ -53,3 +57,17 @@ ion-content {
   height: 19em;
   width: 130px;
 }
+
+#pover-sightList {
+  height: 400px;
+  width: 300px;
+}
+
+.slider {
+  height: 430px;
+}
+
+.my-text-small {
+  font-size: 10pt;
+}
+

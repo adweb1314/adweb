@@ -1,15 +1,29 @@
 <ion-view view-title="景观列表">
   <ion-nav-buttons side="right">
     <a class="button icon ion-ios-home" href="#/rootTab/home"></a>
-    <button class="button icon ion-android-menu" ng-click="openPopover($event)"></button>
   </ion-nav-buttons>
   <ion-content>
+    <div class="padding my-computer-view">
 
-    <ion-list>
-      <ion-toggle  ng-model="setting">
-        景观列表
-      </ion-toggle>
-    </ion-list>
+      <ion-slide-box class="my-white-background" on-slide-changed="slideHasChanged($index)">
+        <ion-slide ng-repeat="sightType in sightTypeList">
+          <ion-list class="list list-inset">
+            <ion-item class="item item-text-wrap text-center my-no-padding-bottom item-balanced">
+              {{sightType.sight_type_name}}
+              <br/>
+              <span class="my-text-small">(滑动切换景观类别)</span>
+            </ion-item>
+            <ion-item class="item item-icon-right"
+                      ng-repeat="sight in sightList"
+                      ng-if="sight.sight_type_id==sightType.sight_type_id"
+                      href="#">
+              {{sight.sight_name}}
+              <i class="icon ion-chevron-right icon-accessory"></i>
+            </ion-item>
+          </ion-list>
+        </ion-slide>
+      </ion-slide-box>
 
+    </div>
   </ion-content>
 </ion-view>

@@ -1,0 +1,27 @@
+<ion-popover-view id="pover-sightList" ng-controller="SightListCtrl">
+  <ion-content>
+
+    <ion-slide-box class="my-white-background" on-slide-changed="slideHasChanged($index)">
+      <ion-slide ng-repeat="sightType in sightTypeList">
+        <ion-list class="list list-inset">
+
+          <ion-item class="item item-text-wrap text-center my-no-padding-bottom item-balanced">
+            {{sightType.sight_type_name}}
+            <br/>
+            <span class="my-text-small">(滑动切换景观类别)</span>
+          </ion-item>
+
+          <ion-item class="item item-icon-right"
+                    ng-repeat="sight in sightList"
+                    ng-if="sight.sight_type_id==sightType.sight_type_id"
+                    href="#">
+            {{sight.sight_name}}
+            <i class="icon ion-chevron-right icon-accessory"></i>
+          </ion-item>
+
+        </ion-list>
+      </ion-slide>
+    </ion-slide-box>
+
+  </ion-content>
+</ion-popover-view>

@@ -1,4 +1,8 @@
-angular.module('app', ['ionic','app.loginControllers','app.homeControllers','app.mineControllers',
+angular.module('app', ['ionic',
+  'app.loginControllers',
+  'app.homeControllers',
+  'app.sightListControllers',
+  'app.mineControllers',
   'app.controllers'])
 
 .run(function($ionicPlatform) {
@@ -52,6 +56,7 @@ angular.module('app', ['ionic','app.loginControllers','app.homeControllers','app
     })
     .state('rootTab.sightList', {
       url: '/sightList',
+      cache: 'false',
       views: {
         'rootTab-sightList': {
           templateUrl: 'templates/rootTab/rootTab-sightList.html',

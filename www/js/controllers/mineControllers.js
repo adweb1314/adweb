@@ -1,6 +1,6 @@
 angular.module('app.mineControllers',[])
 
-.controller('MineCtrl', function($scope,$rootScope,$ionicPopup,$state,$ionicPopover) {
+  .controller('MineCtrl', function($scope,$rootScope,$ionicPopup,$state,$ionicPopover) {
 
     $scope.logout=function(){
       $ionicPopup.confirm({
@@ -20,7 +20,7 @@ angular.module('app.mineControllers',[])
 
     /*菜单栏的固定格式*/{
       // .fromTemplateUrl() 方法
-      $ionicPopover.fromTemplateUrl('templates/pover/pover-navi.html', {
+      $ionicPopover.fromTemplateUrl('templates/pover/pover-sightList.html', {
         scope: $scope
       }).then(function(popover) {
         $scope.popover = popover;
