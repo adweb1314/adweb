@@ -1,6 +1,10 @@
 <ion-tabs class="tabs-icon-top tabs-color-active-positive">
 
-  <ion-tab title="景观列表" icon-off="ion-ios-home" icon-on="ion-ios-home" href="#/rootTab/sightList">
+  <ion-tab class="my-hidden" title="主页" icon-off="ion-ios-home" icon-on="ion-ios-home" href="#/rootTab/home">
+    <ion-nav-view name="rootTab-home"></ion-nav-view>
+  </ion-tab>
+
+  <ion-tab title="景观列表" icon-off="ion-navicon-round" icon-on="ion-navicon-round" href="#/rootTab/sightList">
     <ion-nav-view name="rootTab-sightList"></ion-nav-view>
   </ion-tab>
 

@@ -1,0 +1,55 @@
+* {
+  font-family: "Microsoft YaHei UI Light";
+}
+
+button {
+  font-family: "Microsoft YaHei UI Light";
+}
+
+ion-content {
+  background-color: #f0f0f0;
+}
+
+.my-white-background {
+  background-color: white;
+}
+
+.my-computer-view {
+  max-width: 500px;
+  margin:0 auto;
+}
+
+.my-top-margin {
+  margin-top: 10px;
+}
+
+.my-bottom-margin {
+  margin-bottom: 10px;
+}
+
+.my-red {
+  color: red;
+}
+
+.my-hidden {
+  visibility: hidden;
+  margin-right: -10%;
+}
+
+.my-no-padding {
+  padding: 0;
+}
+
+.my-button-right {
+  line-height: 2em;
+  min-height: 0;
+}
+
+.my-map-wrapper {
+  height: 400px;
+}
+
+#pover-navi {
+  height: 19em;
+  width: 130px;
+}

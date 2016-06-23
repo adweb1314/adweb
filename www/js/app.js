@@ -1,4 +1,5 @@
-angular.module('app', ['ionic','app.loginControllers','app.controllers'])
+angular.module('app', ['ionic','app.loginControllers','app.homeControllers','app.mineControllers',
+  'app.controllers'])
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
@@ -29,7 +30,6 @@ angular.module('app', ['ionic','app.loginControllers','app.controllers'])
       templateUrl:'templates/login/login.html',
       controller: 'LoginCtrl'
     })
-
     .state('register', {
       url:'/register',
       templateUrl:'templates/login/register.html',
@@ -41,7 +41,15 @@ angular.module('app', ['ionic','app.loginControllers','app.controllers'])
       abstract: true,
       templateUrl: 'templates/rootTab/rootTab.html'
     })
-
+    .state('rootTab.home', {
+      url: '/home',
+      views: {
+        'rootTab-home': {
+          templateUrl: 'templates/rootTab/rootTab-home.html',
+          controller: 'HomeCtrl'
+        }
+      }
+    })
     .state('rootTab.sightList', {
       url: '/sightList',
       views: {
@@ -51,7 +59,6 @@ angular.module('app', ['ionic','app.loginControllers','app.controllers'])
         }
       }
     })
-
     .state('rootTab.nearby', {
       url: '/nearby',
       views: {
@@ -61,7 +68,6 @@ angular.module('app', ['ionic','app.loginControllers','app.controllers'])
         }
       }
     })
-
     .state('rootTab.history', {
       url: '/history',
       views: {
@@ -71,7 +77,6 @@ angular.module('app', ['ionic','app.loginControllers','app.controllers'])
         }
       }
     })
-
     .state('rootTab.route', {
       url: '/route',
       views: {
@@ -81,7 +86,6 @@ angular.module('app', ['ionic','app.loginControllers','app.controllers'])
         }
       }
     })
-
     .state('rootTab.mine', {
       url: '/mine',
       views: {

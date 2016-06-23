@@ -1,11 +1,15 @@
 <ion-view view-title="我的账号">
+  <ion-nav-buttons side="right">
+    <a class="button icon ion-ios-home" href="#/rootTab/home"></a>
+    <button class="button icon ion-android-menu" ng-click="openPopover($event)"></button>
+  </ion-nav-buttons>
   <ion-content>
+    <div class="padding my-computer-view">
 
-    <ion-list>
-      <ion-toggle  ng-model="setting">
-        我的账号
-      </ion-toggle>
-    </ion-list>
+      <div class="padding my-top-margin">
+        <button class="button button-block button-assertive" ng-click="logout()">退出登录</button>
+      </div>
 
+    </div>
   </ion-content>
 </ion-view>
