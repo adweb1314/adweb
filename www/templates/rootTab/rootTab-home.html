@@ -4,26 +4,32 @@
     <a class="button icon ion-ios-home" href="#/rootTab/home"></a>
   </ion-nav-buttons>
   <ion-content>
-    <div class="padding my-computer-view">
+    <div class="my-computer-view">
 
-      <item ng-show="!expand&&!loading" class="item item-image" ng-click="doExpand()">
-        <span class="icon ion-ios-arrow-up"></span>
-        检索菜单
-      </item>
-      <item ng-show="expand&&!loading" class="item item-image" ng-click="cancelExpand()">
+      <ion-item ng-show="!expand&&!loading" class="item item-image" ng-click="doExpand()">
         <span class="icon ion-ios-arrow-down"></span>
-        检索完毕
-      </item>
+        检索菜单
+      </ion-item>
+      <ion-item ng-show="expand&&!loading" class="item item-image" ng-click="cancelExpand()">
+        <span class="icon ion-ios-arrow-up"></span>
+        收起菜单
+      </ion-item>
+
+      <ion-item ng-show="expand" class="item item-image positive-border">
+      </ion-item>
 
       <div ng-show="expand" class="item item-input-inset button-right">
         <label class="item-input-wrapper">
           <i class="icon ion-ios-search placeholder-icon"></i>
           <input type="search" ng-model="filter" placeholder="在景观中搜索">
         </label>
-        <button class="button button-positive my-button-right" ng-click="search(filter)">搜索</button>
+        <button class="button button-positive my-button-small" ng-click="search(filter)">搜索</button>
       </div>
 
-      <div ng-show="expand" class="item item-text-wrap">
+      <ion-item ng-show="expand" class="item item-image positive-border">
+      </ion-item>
+
+      <div ng-show="expand" class="item item-text-wrap my-small-padding-up-bottom">
         图层选择：
       </div>
 
@@ -31,9 +37,13 @@
                     ng-click="layer(item)"
                     ng-repeat="item in devList"
                     ng-model="item.checked"
-                    ng-checked="item.checked">
+                    ng-checked="item.checked"
+                    class="item item-text-wrap my-small-padding-up-bottom">
         {{ item.text }}
       </ion-checkbox>
+
+      <ion-item ng-show="expand" class="item item-image positive-border">
+      </ion-item>
 
       <div ng-show="loading" class="item item-text-wrap text-center">
         定位中...

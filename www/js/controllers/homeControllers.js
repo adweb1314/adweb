@@ -47,7 +47,7 @@ angular.module('app.homeControllers',[])
     map.plugin('AMap.Geolocation', function() {
       geolocation = new AMap.Geolocation({
         enableHighAccuracy: true,//是否使用高精度定位，默认:true
-        timeout: 5000,          //超过5秒后停止定位，默认：无穷大
+        timeout: 2000,          //超过2秒后停止定位，默认：无穷大
         buttonOffset: new AMap.Pixel(10, 20),//定位按钮与设置的停靠位置的偏移量，默认：Pixel(10, 20)
         zoomToAccuracy: true,      //定位成功后调整地图视野范围使定位位置及精度范围视野内可见，默认：false
         buttonPosition:'RB'
@@ -61,6 +61,8 @@ angular.module('app.homeControllers',[])
           title: '系统提示',
           template: '定位成功，如有偏差请以实际位置为准'
         });
+        $rootScope.lati=data.position.getLat();
+        $rootScope.longi=data.position.getLng();
         map = new AMap.Map('container', {
           resizeEnable: true,
           zoom:13,

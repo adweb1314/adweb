@@ -2,6 +2,7 @@ angular.module('app', ['ionic',
   'app.loginControllers',
   'app.homeControllers',
   'app.sightListControllers',
+  'app.routeControllers',
   'app.mineControllers',
   'app.controllers'])
 
@@ -36,6 +37,7 @@ angular.module('app', ['ionic',
     })
     .state('register', {
       url:'/register',
+      cache: 'false',
       templateUrl:'templates/login/register.html',
       controller:'RegisterCtrl'
     })
@@ -43,10 +45,11 @@ angular.module('app', ['ionic',
     .state('rootTab', {
       url: '/rootTab',
       abstract: true,
-      templateUrl: 'templates/rootTab/rootTab.html'
+      templateUrl: 'templates/rootTab/rootTab.html',
     })
     .state('rootTab.home', {
       url: '/home',
+      cache: 'false',
       views: {
         'rootTab-home': {
           templateUrl: 'templates/rootTab/rootTab-home.html',
@@ -64,8 +67,59 @@ angular.module('app', ['ionic',
         }
       }
     })
+    .state('rootTab.sight', {
+      url: '/sight/:sight_name',
+      cache: 'false',
+      views: {
+        'rootTab-sightList': {
+          templateUrl: 'templates/sightList/sightList-sight.html',
+          controller: 'SightCtrl'
+        }
+      }
+    })
+    .state('rootTab.sight-detail', {
+      url: '/sight-detail/:sight_name',
+      cache: 'false',
+      views: {
+        'rootTab-sightList': {
+          templateUrl: 'templates/sightList/sight-detail.html',
+          controller: 'SightDetailCtrl'
+        }
+      }
+    })
+    .state('rootTab.sight-comment', {
+      url: '/sight-comment/:sight_name',
+      cache: 'false',
+      views: {
+        'rootTab-sightList': {
+          templateUrl: 'templates/sightList/sight-comment.html',
+          controller: 'SightCommentCtrl'
+        }
+      }
+    })
+    .state('rootTab.sight-newcomment', {
+      url: '/sight-newcomment/:sight_name',
+      cache: 'false',
+      views: {
+        'rootTab-sightList': {
+          templateUrl: 'templates/sightList/sight-newcomment.html',
+          controller: 'SightNewcommentCtrl'
+        }
+      }
+    })
+    .state('rootTab.sight-value', {
+      url: '/sight-value/:sight_name',
+      cache: 'false',
+      views: {
+        'rootTab-sightList': {
+          templateUrl: 'templates/sightList/sight-value.html',
+          controller: 'SightValueCtrl'
+        }
+      }
+    })
     .state('rootTab.nearby', {
       url: '/nearby',
+      cache: 'false',
       views: {
         'rootTab-nearby': {
           templateUrl: 'templates/rootTab/rootTab-nearby.html',
@@ -75,6 +129,7 @@ angular.module('app', ['ionic',
     })
     .state('rootTab.history', {
       url: '/history',
+      cache: 'false',
       views: {
         'rootTab-history': {
           templateUrl: 'templates/rootTab/rootTab-history.html',
@@ -84,6 +139,7 @@ angular.module('app', ['ionic',
     })
     .state('rootTab.route', {
       url: '/route',
+      cache: 'false',
       views: {
         'rootTab-route': {
           templateUrl: 'templates/rootTab/rootTab-route.html',
@@ -93,6 +149,7 @@ angular.module('app', ['ionic',
     })
     .state('rootTab.mine', {
       url: '/mine',
+      cache: 'false',
       views: {
         'rootTab-mine': {
           templateUrl: 'templates/rootTab/rootTab-mine.html',

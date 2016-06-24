@@ -1,21 +1,18 @@
-<ion-view view-title="路线规划">
+<ion-view view-title="{{sight_name}}：全部评论">
   <ion-nav-buttons side="right">
     <button class="button icon ion-android-menu" ng-click="openPopover($event)"></button>
     <a class="button icon ion-ios-home" href="#/rootTab/home"></a>
   </ion-nav-buttons>
   <ion-content>
+    <div class="padding my-computer-view">
 
-    <ion-list>
-      <ion-item>
-        {{dest_name}}
+      <ion-item class="my-small-padding-up-bottom positive my-text-big">
+        全部评论
       </ion-item>
       <ion-item>
-        {{dest_lati}}
+        全部评论
       </ion-item>
-      <ion-item>
-        {{dest_longi}}
-      </ion-item>
-    </ion-list>
 
+    </div>
   </ion-content>
 </ion-view>

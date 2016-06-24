@@ -15,7 +15,7 @@ ion-content {
 }
 
 .my-computer-view {
-  max-width: 500px;
+  max-width: 600px;
   margin:0 auto;
 }
 
@@ -40,13 +40,26 @@ ion-content {
   padding: 0;
 }
 
+.my-small-padding-up-bottom {
+  padding-top: 0.4em;
+  padding-bottom: 0.4em;
+}
+
 .my-no-padding-bottom{
   padding-bottom: 0;
 }
 
-.my-button-right {
-  line-height: 2em;
+.my-button-small {
+  line-height: 1.8em;
+  padding-left: 0.4em;
+  padding-right: 0.4em;
   min-height: 0;
+  min-width: 0;
+}
+
+.my-button-balanced-weak {
+  color: white;
+  background-color: #80f080;
 }
 
 .my-map-wrapper {
@@ -60,14 +73,47 @@ ion-content {
 
 #pover-sightList {
   height: 400px;
-  width: 300px;
+  width: 310px;
 }
 
 .slider {
   height: 430px;
 }
 
+.my-slider-comment {
+  height: 200px;
+}
+
 .my-text-small {
   font-size: 10pt;
 }
 
+.my-text-big {
+  font-size: 14pt;
+  font-weight: bold;
+}
+
+.my-table-full-width {
+  width: 100%;
+}
+
+.my-cell-long {
+  width: 50%;
+  height: 1.9em;
+}
+
+.my-cell-short {
+  width: 25%;
+  height: 1.9em;
+}
+
+.my-float-right {
+  float: right;
+}
+
+.my-portrait {
+  background-color: white;
+  border-radius: 50%;
+  height: 80px;
+  width: 80px;
+}

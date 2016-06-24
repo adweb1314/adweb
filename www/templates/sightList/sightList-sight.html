@@ -1,0 +1,158 @@
+<ion-view view-title="{{sight_name}}">
+  <ion-nav-buttons side="left">
+    <a class="button" ng-click="doBack()" href="#/rootTab/sightList">
+      <i class="icon ion-ios-arrow-back"></i>
+      返回景观列表
+    </a>
+  </ion-nav-buttons>
+  <ion-nav-buttons side="right">
+    <button class="button icon ion-android-menu" ng-click="openPopover($event)"></button>
+    <a class="button icon ion-ios-home" href="#/rootTab/home"></a>
+  </ion-nav-buttons>
+  <ion-content>
+    <div class="padding my-computer-view">
+
+      <ion-item class="my-small-padding-up-bottom positive my-text-big">
+        位置信息
+      </ion-item>
+      <div class="item my-map-wrapper">
+        <!--<baidu-map id="baidu-map" options="mapOptions" ak="7EZoSoWRPRCTaK36Q7vgSGVN506t6WM9" offline="offlineOpts" on-map-loaded="loadMap(map)"></baidu-map>-->
+        <div id="container"></div>
+      </div>
+      <ion-item class="my-small-padding-up-bottom">
+        <a class="button button-block button-positive"
+           ng-click="goRoute()"
+           href="#/rootTab/route">
+          <i class="icon ion-ios-navigate"></i>
+          路线：到这里去
+        </a>
+      </ion-item>
+
+      <ion-list class="padding">
+      </ion-list>
+
+      <ion-item class="my-small-padding-up-bottom positive my-text-big">
+        基本信息
+      </ion-item>
+      <ion-item>
+        基本信息
+      </ion-item>
+      <ion-item class="my-small-padding-up-bottom">
+        <a class="button button-block button-positive"
+           ng-click="doForward()"
+           href="#/rootTab/sight-detail/{{sight_name}}">
+          景观：查看详细资料
+        </a>
+      </ion-item>
+
+      <ion-list class="padding">
+      </ion-list>
+
+      <ion-item class="my-small-padding-up-bottom positive my-text-big">
+        用户评价
+      </ion-item>
+
+      <ion-item ng-show="!expand" class="item item-image" ng-click="doExpand()">
+        <span class="icon ion-ios-arrow-down"></span>
+        查看评分详细信息
+      </ion-item>
+      <ion-item ng-show="expand" class="item item-image" ng-click="cancelExpand()">
+        <span class="icon ion-ios-arrow-up"></span>
+        收起评分详细信息
+      </ion-item>
+
+      <ion-item>
+        <div>
+          <img src="img/star-on-big.png"/>
+          <img src="img/star-on-big.png"/>
+          <img src="img/star-on-big.png"/>
+          <img src="img/star-on-big.png"/>
+          <img src="img/star-on-big.png"/>
+          <span class="my-float-right">({{10}}个人评分)</span>
+        </div>
+        <div ng-show="expand">
+          <div class="padding">
+          </div>
+          <div>
+            <img src="img/star-on-big.png"/>
+            <img src="img/star-off-big.png"/>
+            <img src="img/star-off-big.png"/>
+            <img src="img/star-off-big.png"/>
+            <img src="img/star-off-big.png"/>
+          </div>
+          <div>
+            <img src="img/star-on-big.png"/>
+            <img src="img/star-on-big.png"/>
+            <img src="img/star-off-big.png"/>
+            <img src="img/star-off-big.png"/>
+            <img src="img/star-off-big.png"/>
+          </div>
+          <div>
+            <img src="img/star-on-big.png"/>
+            <img src="img/star-on-big.png"/>
+            <img src="img/star-on-big.png"/>
+            <img src="img/star-off-big.png"/>
+            <img src="img/star-off-big.png"/>
+          </div>
+          <div>
+            <img src="img/star-on-big.png"/>
+            <img src="img/star-on-big.png"/>
+            <img src="img/star-on-big.png"/>
+            <img src="img/star-on-big.png"/>
+            <img src="img/star-off-big.png"/>
+          </div>
+          <div>
+            <img src="img/star-on-big.png"/>
+            <img src="img/star-on-big.png"/>
+            <img src="img/star-on-big.png"/>
+            <img src="img/star-on-big.png"/>
+            <img src="img/star-on-big.png"/>
+          </div>
+        </div>
+        <div class="padding">
+        </div>
+        <div class="text-center">
+          <button class="button button-positive my-button-small"><i class="ion-plus"></i>&nbsp收藏</button>
+          <button class="button button-positive my-button-small"><i class="ion-plus"></i>&nbsp分享</button>
+          <button class="button button-positive my-button-small"><i class="ion-plus"></i>&nbsp足迹</button>
+          <button class="button button-positive my-button-small"><i class="ion-plus"></i>&nbsp心愿</button>
+        </div>
+      </ion-item>
+      <ion-item class="my-small-padding-up-bottom">
+        <ion-slide-box class="my-slider-comment my-white-background" on-slide-changed="slideHasChanged($index)">
+          <ion-slide ng-repeat="sightComment in sightCommentList">
+            <div class="padding">
+              <div>
+                <h2>{{"xxx"}}的评论：</h2>
+              </div>
+              <div>
+                <img src="img/star-on-big.png"/>
+              </div>
+              <div>
+                &nbsp&nbsp&nbsp&nbsp{{sightComment.sight_comment}}
+              </div>
+            </div>
+          </ion-slide>
+        </ion-slide-box>
+      </ion-item>
+      <ion-item class="my-small-padding-up-bottom">
+        <a class="button button-block button-positive"
+           ng-click="doForward()"
+           href="#/rootTab/sight-comment/{{sight_name}}">
+          景观：查看全部评论
+        </a>
+        <a class="button button-block button-positive"
+           ng-click="doForward()"
+           href="#/rootTab/sight-newcomment/{{sight_name}}">
+          景观：我要评论
+        </a>
+        <a class="button button-block button-positive"
+           ng-click="doForward()"
+           href="#/rootTab/sight-value/{{sight_name}}">
+          景观：评价信息
+        </a>
+      </ion-item>
+
+    </div>
+  </ion-content>
+</ion-view>
