@@ -82,11 +82,18 @@ angular.module('app.sightListControllers',[])
 
     //详细信息展开与收回
     $scope.expand=false;
+    $scope.expand2=false;
     $scope.doExpand=function(){
       $scope.expand=true;
     };
     $scope.cancelExpand=function(){
       $scope.expand=false;
+    };
+    $scope.doExpand2=function(){
+      $scope.expand2=true;
+    };
+    $scope.cancelExpand2=function(){
+      $scope.expand2=false;
     };
 
     //滑动框默认格式
@@ -112,9 +119,10 @@ angular.module('app.sightListControllers',[])
     //选择路径导航时
     $scope.goRoute=function(){
       $scope.doForward();
-      $rootScope.dest_name=$scope.sight.sight_name;
-      $rootScope.dest_lati=$scope.sight.sight_lati;
-      $rootScope.dest_longi=$scope.sight.sight_longi;
+      $rootScope.dest={
+        name:$scope.sight.sight_name,
+        lati:$scope.sight.sight_lati,
+        longi:$scope.sight.sight_longi};
     };
 
     /*菜单栏的固定格式*/{
@@ -138,7 +146,7 @@ angular.module('app.sightListControllers',[])
 
   })
 
-  //单个景观页面控制
+  //详细资料页面控制
   .controller('SightDetailCtrl', function($scope,$rootScope,$stateParams,$ionicPopover) {
 
     //url参数传递
@@ -167,33 +175,6 @@ angular.module('app.sightListControllers',[])
 
   //所有评论页面控制
   .controller('SightCommentCtrl', function($scope,$rootScope,$stateParams,$ionicPopover) {
-
-    //url参数传递
-    $scope.sight_name = $stateParams.sight_name;
-
-    /*菜单栏的固定格式*/{
-      // .fromTemplateUrl() 方法
-      $ionicPopover.fromTemplateUrl('templates/pover/pover-sightList.html', {
-        scope: $scope
-      }).then(function(popover) {
-        $scope.popover = popover;
-      });
-      $scope.openPopover = function($event) {
-        $scope.popover.show($event);
-      };
-      $scope.closePopover = function() {
-        $scope.popover.hide();
-      };
-      // 清除浮动框
-      $scope.$on('$destroy', function() {
-        $scope.popover.remove();
-      });
-    }
-
-  })
-
-  //新建评论页面控制
-  .controller('SightNewcommentCtrl', function($scope,$rootScope,$stateParams,$ionicPopover) {
 
     //url参数传递
     $scope.sight_name = $stateParams.sight_name;

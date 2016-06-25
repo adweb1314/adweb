@@ -51,7 +51,7 @@
           <ion-item class="item item-icon-right"
                     ng-repeat="sight in sightList"
                     ng-if="sight.sight_type_id==sightType.sight_type_id"
-                    ng-click="doForward()"
+                    ng-click="popover.hide().then(doForward())"
                     href="#/rootTab/sight/{{sight.sight_name}}">
             {{sight.sight_name}}
             <i class="icon ion-chevron-right icon-accessory"></i>

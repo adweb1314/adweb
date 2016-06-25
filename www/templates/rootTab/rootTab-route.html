@@ -4,18 +4,29 @@
     <a class="button icon ion-ios-home" href="#/rootTab/home"></a>
   </ion-nav-buttons>
   <ion-content>
+    <div class="my-computer-view">
 
-    <ion-list>
-      <ion-item>
-        {{dest_name}}
+      <ion-item ng-show="!expand" class="item item-image" ng-click="doExpand()">
+        <span class="icon ion-ios-arrow-down"></span>
+        寻路菜单
       </ion-item>
-      <ion-item>
-        {{dest_lati}}
+      <ion-item ng-show="expand" class="item item-image" ng-click="cancelExpand()">
+        <span class="icon ion-ios-arrow-up"></span>
+        收起菜单
       </ion-item>
-      <ion-item>
-        {{dest_longi}}
-      </ion-item>
-    </ion-list>
 
+      <ion-item ng-show="expand" class="my-small-padding-up-bottom">
+        出发地：{{start.name}}({{start.longi}},{{start.lati}})
+      </ion-item>
+      <ion-item ng-show="expand" class="my-small-padding-up-bottom">
+        目的地：{{dest.name}}({{dest.longi}},{{dest.lati}})
+      </ion-item>
+
+      <div class="item my-map-wrapper">
+        <!--<baidu-map id="baidu-map" options="mapOptions" ak="7EZoSoWRPRCTaK36Q7vgSGVN506t6WM9" offline="offlineOpts" on-map-loaded="loadMap(map)"></baidu-map>-->
+        <div id="container"></div>
+      </div>
+
+    </div>
   </ion-content>
 </ion-view>

@@ -2,9 +2,47 @@ angular.module('app.routeControllers',[])
 
   .controller('RouteCtrl', function($scope,$rootScope,$ionicPopover) {
 
-    $scope.dest_name=$rootScope.dest_name;
-    $scope.dest_lati=$rootScope.dest_lati;
-    $scope.dest_longi=$rootScope.dest_longi;
+    //详细信息展开与收回
+    $scope.expand=true;
+    $scope.doExpand=function(){
+      $scope.expand=true;
+    };
+    $scope.cancelExpand=function(){
+      $scope.expand=false;
+    };
+
+    //根据首页定位信息初始化地图
+    var map, toolBar;
+    map = new AMap.Map('container', {
+      resizeEnable: true,
+      zoom:13,
+      center: [$rootScope.longi, $rootScope.lati]
+    });
+    toolBar = new AMap.ToolBar();
+    map.addControl(toolBar);
+
+    //初始出发地为空，任何时候出发地点为空就从首页定位的用户所在地出发
+    $scope.start={
+      name:"",
+      lati:$rootScope.lati,
+      longi:$rootScope.longi
+    };
+
+    //进行路径规划的函数
+    $scope.goRoute=function() {
+
+    };
+
+    //判断有没有设定过目的地，若设定过，则直接进行一次寻路
+    if ($rootScope.dest==null||$rootScope.dest.name==null||$rootScope.dest.name==""){
+      $rootScope.dest={
+        name:"",
+        lati:"",
+        longi:""};
+    }else{
+      $scope.dest=$rootScope.dest;
+      $scope.goRoute();
+    }
 
     /*菜单栏的固定格式*/{
       // .fromTemplateUrl() 方法

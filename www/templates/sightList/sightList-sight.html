@@ -24,7 +24,7 @@
            ng-click="goRoute()"
            href="#/rootTab/route">
           <i class="icon ion-ios-navigate"></i>
-          路线：到这里去
+          路线规划：到这里去
         </a>
       </ion-item>
 
@@ -41,7 +41,7 @@
         <a class="button button-block button-positive"
            ng-click="doForward()"
            href="#/rootTab/sight-detail/{{sight_name}}">
-          景观：查看详细资料
+          查看详细资料
         </a>
       </ion-item>
 
@@ -135,16 +135,25 @@
           </ion-slide>
         </ion-slide-box>
       </ion-item>
+
+      <ion-item ng-show="!expand2" class="item item-image" ng-click="doExpand2()">
+        <span class="icon ion-ios-arrow-down"></span>
+        我要评论
+      </ion-item>
+      <ion-item ng-show="expand2" class="item item-image" ng-click="cancelExpand2()">
+        <span class="icon ion-ios-arrow-up"></span>
+        收起评论
+      </ion-item>
+
+      <ion-item ng-show="expand2">
+        这里有个评论框
+      </ion-item>
+
       <ion-item class="my-small-padding-up-bottom">
         <a class="button button-block button-positive"
            ng-click="doForward()"
            href="#/rootTab/sight-comment/{{sight_name}}">
           景观：查看全部评论
-        </a>
-        <a class="button button-block button-positive"
-           ng-click="doForward()"
-           href="#/rootTab/sight-newcomment/{{sight_name}}">
-          景观：我要评论
         </a>
         <a class="button button-block button-positive"
            ng-click="doForward()"

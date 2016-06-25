@@ -1,4 +1,4 @@
-<ion-view view-title="{{sight_name}}：详细资料">
+<ion-view view-title="详细资料">
   <ion-nav-buttons side="right">
     <button class="button icon ion-android-menu" ng-click="openPopover($event)"></button>
     <a class="button icon ion-ios-home" href="#/rootTab/home"></a>
@@ -10,7 +10,7 @@
         基本信息
       </ion-item>
       <ion-item>
-        基本信息
+        {{sight_name}}：基本信息
       </ion-item>
 
       <ion-list class="padding">
@@ -20,7 +20,7 @@
         图片库
       </ion-item>
       <ion-item>
-        图片库
+        {{sight_name}}：图片库
       </ion-item>
 
       <ion-list class="padding">
@@ -30,7 +30,7 @@
         详细介绍
       </ion-item>
       <ion-item>
-        详细介绍
+        {{sight_name}}：详细介绍
       </ion-item>
       <ion-item class="text-center">
         <div>

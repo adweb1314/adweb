@@ -36,6 +36,8 @@ angular.module('app.homeControllers',[])
 
     //加载地图，调用浏览器定位服务
     $scope.loading=true;
+    $rootScope.lati=31.245554;
+    $rootScope.longi=121.506191;
     var map, toolBar, geolocation;
     map = new AMap.Map('container', {
       resizeEnable: true,

@@ -15,7 +15,7 @@ ion-content {
 }
 
 .my-computer-view {
-  max-width: 600px;
+  max-width: 500px;
   margin:0 auto;
 }
 
@@ -63,7 +63,7 @@ ion-content {
 }
 
 .my-map-wrapper {
-  height: 400px;
+  height: 430px;
 }
 
 #pover-navi {
