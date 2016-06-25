@@ -50,7 +50,7 @@ angular.module('app', ['ionic',
     })
     .state('rootTab.home', {
       url: '/home',
-      cache: 'false',
+      //cache: 'false',
       views: {
         'rootTab-home': {
           templateUrl: 'templates/rootTab/rootTab-home.html',
