@@ -1,0 +1,28 @@
+<ion-view view-title="修改信息">
+  <ion-nav-buttons side="right">
+    <button class="button icon ion-android-menu" ng-click="openPopover($event)"></button>
+    <a class="button icon ion-ios-home" href="#/rootTab/home"></a>
+  </ion-nav-buttons>
+  <ion-content>
+    <div class="padding my-computer-view">
+
+      <label class="item item-input item-floating-label my-white-background my-top-margin">
+        <span class="input-label">昵称：</span>
+        <input type="text" placeholder="昵称" ng-model="user_name"/>
+      </label>
+
+      <div class="padding my-top-margin">
+           <img class="my-portrait" ng-src="img/bubbles-alt-icon.png" ng-click=""> <!-上传头像-->
+      </div>
+
+      <div class="padding my-top-margin">
+        <button ng-show="true"
+                class="button button-block button-positive" ng-click="changeInfo(user_name, user_avatar)">修改</button>
+        <div ng-show="!(true) " class="item item-text-wrap text-center">
+          请正确、完整填写信息
+        </div>
+      </div>
+
+    </div>
+  </ion-content>
+</ion-view>
