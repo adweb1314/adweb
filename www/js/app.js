@@ -70,7 +70,7 @@ angular.module('app', ['ionic',
     })
     .state('rootTab.sight', {
       url: '/sight/:sight_name',
-      //cache: 'false',
+      cache: 'false',
       views: {
         'rootTab-sightList': {
           templateUrl: 'templates/sightList/sightList-sight.html',
@@ -80,7 +80,7 @@ angular.module('app', ['ionic',
     })
     .state('rootTab.sight-detail', {
       url: '/sight-detail/:sight_name',
-      cache: 'false',
+      //cache: 'false',
       views: {
         'rootTab-sightList': {
           templateUrl: 'templates/sightList/sight-detail.html',

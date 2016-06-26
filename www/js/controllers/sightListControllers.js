@@ -1,7 +1,7 @@
 angular.module('app.sightListControllers',[])
 
   //rootTab-sightList控制
-  .controller('SightListCtrl', function($scope,$rootScope,$ionicHistory) {
+  .controller('SightListCtrl', function($scope,$rootScope,$ionicHistory,$http) {
 
     //前进时禁止回退
     $scope.doForward=function(){
@@ -33,27 +33,32 @@ angular.module('app.sightListControllers',[])
       $scope.sortType='sortByWish';
     };
 
+    //搜索功能
+    //将搜索词加入到后台历史记录功能（待开发）
+    $scope.lastQuery="";
+    $scope.search=function(query){
+      if (query==null) {
+        query="";
+      }
+      $scope.lastQuery=query;
+    };
+
     //滑动框默认格式
     $scope.myActiveSlide = 1;
-
-    //一波假数据假数据假数据假数据假数据假数据假数据假数据假数据假数据假数据假数据假数据假数据假数据
-    $rootScope.sightList=[
-      {sight_name:'天安门',sight_type_id:1,sight_lati:0,sight_longi:0},
-      {sight_name:'天坛',sight_type_id:1,sight_lati:1,sight_longi:1},
-      {sight_name:'中山陵',sight_type_id:2,sight_lati:2,sight_longi:2},
-      {sight_name:'11区',sight_type_id:3,sight_lati:3,sight_longi:3},
-      {sight_name:'亚邦天井',sight_type_id:3,sight_lati:4,sight_longi:4},
-      {sight_name:'幻想乡',sight_type_id:3,sight_lati:5,sight_longi:5}
-    ];
-    $rootScope.sightTypeList=[
-      {sight_type_id:1,sight_type_name:'北京冷'},
-      {sight_type_id:2,sight_type_name:'南京暖'},
-      {sight_type_id:3,sight_type_name:'东京热'}
-    ];
 
     //获取用户数据
     $scope.sightList=$rootScope.sightList;
     $scope.sightTypeList=$rootScope.sightTypeList;
+    if ($scope.sightList==null){
+      $http.get("http://localhost:8080/sight")
+        .success(function(ret) {
+          $scope.sightList = ret;
+          $http.get("http://localhost:8080/sight_type")
+            .success(function (ret) {
+              $scope.sightTypeList = ret;
+            })
+        })
+    }
 
     //默认排序为评分排序
     $scope.sortByGrade();

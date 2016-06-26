@@ -1,6 +1,38 @@
 <ion-popover-view id="pover-sightList" ng-controller="SightListCtrl">
   <ion-content>
 
+    <ion-item ng-show="!expand" class="item item-image" ng-click="doExpand()">
+      <span class="icon ion-ios-arrow-down"></span>
+      检索菜单
+    </ion-item>
+    <ion-item ng-show="expand" class="item item-image" style="margin-top:-2px;" ng-click="cancelExpand()">
+      <span class="icon ion-ios-arrow-up"></span>
+      收起菜单
+    </ion-item>
+
+    <div ng-show="expand" class="item item-input-inset button-right">
+      <label class="item-input-wrapper">
+        <i class="icon ion-ios-search placeholder-icon"></i>
+        <input type="search" ng-model="filter" placeholder="在景观中搜索">
+      </label>
+      <button class="button button-balanced my-button-small" ng-click="search(filter)">搜索</button>
+    </div>
+
+    <ion-item ng-show="expand" class="item item-image balanced-border">
+    </ion-item>
+
+    <div ng-show="expand" class="item item-text-wrap my-small-padding-up-bottom">
+      <span class="my-button-small">排序：</span>
+      <span ng-if="sortType=='sortByGrade'" class="button button-balanced my-button-small" ng-click="sortByGrade()">评分</span>
+      <span ng-if="sortType!='sortByGrade'" class="button my-button-balanced-weak my-button-small" ng-click="sortByGrade()">评分</span>
+      <span ng-if="sortType=='sortByCollection'" class="button button-balanced my-button-small" ng-click="sortByCollection()">收藏</span>
+      <span ng-if="sortType!='sortByCollection'" class="button my-button-balanced-weak my-button-small" ng-click="sortByCollection()">收藏</span>
+      <span ng-if="sortType=='sortByStep'" class="button button-balanced my-button-small" ng-click="sortByStep()">足迹</span>
+      <span ng-if="sortType!='sortByStep'" class="button my-button-balanced-weak my-button-small" ng-click="sortByStep()">足迹</span>
+      <span ng-if="sortType=='sortByWish'" class="button button-balanced my-button-small" ng-click="sortByWish()">心愿</span>
+      <span ng-if="sortType!='sortByWish'" class="button my-button-balanced-weak my-button-small" ng-click="sortByWish()">心愿</span>
+    </div>
+
     <ion-slide-box class="my-white-background" on-slide-changed="slideHasChanged($index)">
       <ion-slide ng-repeat="sightType in sightTypeList">
         <ion-list class="list list-inset">
@@ -11,48 +43,13 @@
             <span class="my-text-small">(tip:水平滑动切换景观类别)</span>
           </ion-item>
 
-          <ion-item class="item item-image balanced-border">
-          </ion-item>
-
-          <ion-item ng-show="!expand" class="item item-image" ng-click="doExpand()">
-            <span class="icon ion-ios-arrow-down"></span>
-            检索菜单
-          </ion-item>
-          <ion-item ng-show="expand" class="item item-image" ng-click="cancelExpand()">
-            <span class="icon ion-ios-arrow-up"></span>
-            收起菜单
-          </ion-item>
-          <ion-item ng-show="expand" class="item item-image balanced-border">
-          </ion-item>
-
-          <div ng-show="expand" class="item item-input-inset button-right">
-            <label class="item-input-wrapper">
-              <i class="icon ion-ios-search placeholder-icon"></i>
-              <input type="search" ng-model="filter" placeholder="在景观中搜索">
-            </label>
-            <!--<p>{{filter}}</p>-->
-          </div>
-
-          <div ng-show="expand" class="item item-text-wrap my-small-padding-up-bottom">
-            <span class="my-button-small">排序：</span>
-            <span ng-if="sortType=='sortByGrade'" class="button button-balanced my-button-small" ng-click="sortByGrade()">评分</span>
-            <span ng-if="sortType!='sortByGrade'" class="button my-button-balanced-weak my-button-small" ng-click="sortByGrade()">评分</span>
-            <span ng-if="sortType=='sortByCollection'" class="button button-balanced my-button-small" ng-click="sortByCollection()">收藏</span>
-            <span ng-if="sortType!='sortByCollection'" class="button my-button-balanced-weak my-button-small" ng-click="sortByCollection()">收藏</span>
-            <span ng-if="sortType=='sortByStep'" class="button button-balanced my-button-small" ng-click="sortByStep()">足迹</span>
-            <span ng-if="sortType!='sortByStep'" class="button my-button-balanced-weak my-button-small" ng-click="sortByStep()">足迹</span>
-            <span ng-if="sortType=='sortByWish'" class="button button-balanced my-button-small" ng-click="sortByWish()">心愿</span>
-            <span ng-if="sortType!='sortByWish'" class="button my-button-balanced-weak my-button-small" ng-click="sortByWish()">心愿</span>
-          </div>
-
-          <ion-item class="item item-image balanced-border">
-          </ion-item>
-
           <ion-item class="item item-icon-right"
                     ng-repeat="sight in sightList"
-                    ng-if="sight.sight_type_id==sightType.sight_type_id"
+                    ng-if="sight.sight_type_id==sightType.sight_type_id
+                        &&sight.sight_name.indexOf(lastQuery)>=0"
                     ng-click="popover.hide().then(doForward())"
                     href="#/rootTab/sight/{{sight.sight_name}}">
+            <img src="http://localhost:8080/img/my_mark_{{sightType.sight_type_id}}.png"/>
             {{sight.sight_name}}
             <i class="icon ion-chevron-right icon-accessory"></i>
           </ion-item>

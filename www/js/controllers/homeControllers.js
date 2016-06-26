@@ -19,8 +19,24 @@ angular.module('app.homeControllers',[])
       infoWindow.setContent(e.target.content);
       infoWindow.open(map, e.target.getPosition());
     }
-    function infoCreater(sight_name){
-      return("<a href=\"#/rootTab/sight/"+sight_name+"\">"+sight_name+"</a>");
+    function infoCreater(s){
+      var i,t;
+      for (i=0;i<$scope.sightTypeList.length;i++) {
+        t = $scope.sightTypeList[i];
+        if (t.sight_type_id==s.sight_type_id){
+          break;
+        }
+      }
+      return(
+      "<div>" +
+      " <span class='my-text-big'>"+ s.sight_name+"</span>" +
+      " <span class='my-text-small'>["+ t.sight_type_name+"]</span>" +
+      "</div>" +
+      "<div>" +
+      " <div class='my-text-small'>&nbsp&nbsp&nbsp&nbsp"+ s.sight_description.substring(0,15) +"</div>" +
+      " <div class='my-text-small'>"+ s.sight_description.substring(15,30) +"...</div>" +
+      "</div>"
+      );
     }
 
     //用来初始化地图，显示所有景观地点标识的函数
@@ -35,10 +51,19 @@ angular.module('app.homeControllers',[])
           position: [s.sight_longi, s.sight_lati]
         });
         markers.push(marker);
-        marker.content=infoCreater(s.sight_name);
+        marker.content=infoCreater(s);
         marker.on('click',markerClick);
         marker.emit('click',{target:marker});
       }
+      marker = new AMap.Marker({
+        map: map,
+        icon: "http://localhost:8080/img/my_mark_self.png",
+        position: [$rootScope.longi, $rootScope.lati]
+      });
+      selfMarker=marker;
+      marker.content = '<p>当前位置</p>';
+      marker.on('click', markerClick);
+      marker.emit('click', {target: marker});
     };
 
     //额外显示某类地点标识的函数
@@ -53,7 +78,7 @@ angular.module('app.homeControllers',[])
             position: [s.sight_longi, s.sight_lati]
           });
           var marker=markers[i];
-          marker.content=infoCreater(s.sight_name);
+          marker.content=infoCreater(s);
           marker.on('click',markerClick);
           marker.emit('click',{target:marker});
         }
@@ -90,6 +115,15 @@ angular.module('app.homeControllers',[])
         }
       }
       selfMarker.setMap(null);
+      selfMarker = new AMap.Marker({
+        map: map,
+        icon: "http://localhost:8080/img/my_mark_self.png",
+        position: [$rootScope.longi, $rootScope.lati]
+      });
+      var marker=selfMarker;
+      marker.content='<p>当前位置</p>';
+      marker.on('click',markerClick);
+      marker.emit('click',{target:marker});
       map.setFitView();
     };
 
@@ -115,8 +149,8 @@ angular.module('app.homeControllers',[])
     // 的函数，加载用户数据成功后再加载地图
     $scope.loading=true;//默认状态：地图未加载
     var loadMap=function() {
-      $rootScope.lati=31.245554;//定位失败时默认位置：东方明珠
-      $rootScope.longi=121.506191;
+      $rootScope.lati=31.239666;//定位失败时默认位置：东方明珠
+      $rootScope.longi=121.499809;
       var toolBar, geolocation;
 
       map = new AMap.Map('container', {
@@ -153,14 +187,6 @@ angular.module('app.homeControllers',[])
           toolBar = new AMap.ToolBar();
           map.addControl(toolBar);
           showSight(map);
-          selfMarker = new AMap.Marker({
-            map: map,
-            icon: "http://localhost:8080/img/my_mark_self.png",
-            position: [$rootScope.longi, $rootScope.lati]
-          });
-          selfMarker.content = '我的位置';
-          selfMarker.on('click', markerClick);
-          selfMarker.emit('click', {target: marker});
         });
         //定位失败
         AMap.event.addListener(geolocation, 'error', function(data) {
@@ -170,14 +196,6 @@ angular.module('app.homeControllers',[])
             template: '定位失败，显示默认位置'
           });
           showSight(map);
-          selfMarker = new AMap.Marker({
-            map: map,
-            icon: "http://localhost:8080/img/my_mark_self.png",
-            position: [$rootScope.longi, $rootScope.lati]
-          });
-          selfMarker.content = '我的位置';
-          selfMarker.on('click', markerClick);
-          selfMarker.emit('click', {target: marker});
         });
       });
     };
@@ -186,40 +204,68 @@ angular.module('app.homeControllers',[])
     // 取得类型数据
     //  构造图层选择框
     //  载入地图
-    $http.get("http://localhost:8080/sight")
-      .success(function(ret){
-        $scope.sightList=ret;
-        $rootScope.sightList=ret;
-        $http.get("http://localhost:8080/sight_type")
-          .success(function(ret){
-            $scope.sightTypeList=ret;
-            $rootScope.sightTypeList=ret;
-            var i;
-            var devList=[];
-            for (i=0;i<$scope.sightTypeList.length;i++){
-              var s=$scope.sightTypeList[i];
-              var dev={
-                index: i,
-                id: s.sight_type_id,
-                text: s.sight_type_name,
-                checked: true
-              };
-              devList.push(dev);
-            }
-            $scope.devList=devList;
-            loadMap();
+    if ($rootScope.notFirstHome==null) {
+      $rootScope.notFirstHome="樱满集在日语中读作oh my shit";
+      $http.get("http://localhost:8080/sight")
+        .success(function(ret){
+          $scope.sightList=ret;
+          $rootScope.sightList=ret;
+          $http.get("http://localhost:8080/sight_type")
+            .success(function(ret){
+              $scope.sightTypeList=ret;
+              $rootScope.sightTypeList=ret;
+              var i;
+              var devList=[];
+              for (i=0;i<$scope.sightTypeList.length;i++){
+                var s=$scope.sightTypeList[i];
+                var dev={
+                  index: i,
+                  id: s.sight_type_id,
+                  text: s.sight_type_name,
+                  checked: true
+                };
+                devList.push(dev);
+              }
+              $scope.devList=devList;
+              loadMap();
+            });
+        })
+        .error(function(){
+          $ionicPopup.alert({
+            title: '系统提示',
+            template: '由于网络问题无法连接到服务器'
           });
-      })
-      .error(function(){
-        $ionicPopup.alert({
-          title: '系统提示',
-          template: '由于网络问题无法连接到服务器'
+          $state.go('login');
         });
-        $state.go('login');
+    }else{
+      $scope.loading=false;
+      $scope.sightList=$rootScope.sightList;
+      $scope.sightTypeList=$rootScope.sightTypeList;
+      var i;
+      var devList=[];
+      for (i=0;i<$scope.sightTypeList.length;i++){
+        var s=$scope.sightTypeList[i];
+        var dev={
+          index: i,
+          id: s.sight_type_id,
+          text: s.sight_type_name,
+          checked: true
+        };
+        devList.push(dev);
+      }
+      $scope.devList=devList;
+      map = new AMap.Map('container', {
+        resizeEnable: true,
+        zoom:13,
+        center: [$rootScope.longi, $rootScope.lati]
       });
+      var toolBar = new AMap.ToolBar();
+      map.addControl(toolBar);
+      showSight(map);
+    }
 
     //搜索功能
-    //将搜索词加入到后台历史记录功能
+    //将搜索词加入到后台历史记录功能（待开发）
     $scope.search=function(query){
       if (query==null) {
         query="";
