@@ -11,46 +11,82 @@ angular.module('app.homeControllers',[])
       $scope.expand=false;
     };
 
-    //搜索功能（待开发）
-    $scope.search=function(query){
-      if (query==null||query==""){
-
-        $ionicPopup.alert({
-          title: '系统提示',
-          template: '搜索词不能为空'
+    //用来初始化地图，显示所有景观地点标识的函数
+    var showSight=function(map){
+      var i;
+      markers=[];
+      for (i=0;i<$scope.sightList.length;i++){
+        var s=$scope.sightList[i];
+        var marker = new AMap.Marker({
+          map: map,
+          icon: "http://localhost:8080/img/my_mark_"+s.sight_type_id+".png",
+          position: [s.sight_longi, s.sight_lati],
         });
-
-      }else{
-
-        $ionicPopup.alert({
-          title: '搜索词',
-          template: query
-        });
-
+        markers.push(marker);
       }
     };
 
-    //图层变换功能（待开发）
-    $scope.layer=function(item){
-
-      $ionicPopup.alert({
-        title: '图层改变',
-        template: item.text+item.checked
-      });
-
-    };
-
-    //显示景观地点的函数
-    var showSight=function(map){
+    //额外显示某类地点标识的函数
+    var addSight=function(map,id){
       var i;
       for (i=0;i<$scope.sightList.length;i++){
         var s=$scope.sightList[i];
-        new AMap.Marker({
-          map: map,
-          icon: "img/mark_b.png",
-          position: [s.sight_longi, s.sight_lati],
-          offset: new AMap.Pixel(-12, -36)
-        });
+        if (id==s.sight_type_id){
+          markers[i] = new AMap.Marker({
+            map: map,
+            icon: "http://localhost:8080/img/my_mark_"+s.sight_type_id+".png",
+            position: [s.sight_longi, s.sight_lati],
+          });
+        }
+      }
+    };
+
+    //去掉显示某类地点标识的函数
+    var removeSight=function(map,id){
+      var i;
+      for (i=0;i<$scope.sightList.length;i++){
+        var s=$scope.sightList[i];
+        if (id==s.sight_type_id){
+          markers[i].setMap(null);
+        }
+      }
+    };
+
+    //从所有已选图层中筛选query命中的地点标识的函数
+    var querySight=function(map,query){
+      var i;
+      //全部删除，然后添加可能需要的
+      for (i=0;i<$scope.devList.length;i++) {
+        var dev=$scope.devList[i];
+        removeSight(map,dev.id);
+        if (dev.checked){
+          addSight(map,dev.id);
+        }
+      }
+      //继续在可能需要的中删除不匹配项
+      for (i=0;i<$scope.sightList.length;i++){
+        var s=$scope.sightList[i];
+        if (s.sight_name.indexOf(query)<0){
+          markers[i].setMap(null);
+        }
+      }
+    };
+
+    //事件：切换图层以致可能额外显示一些地点标识时
+    var addSightEvent=function(map,id){
+      if ($scope.lastQuery!=null&&$scope.lastQuery!=""){
+        querySight(map,$scope.lastQuery);
+      }else{
+        addSight(map,id);
+      }
+    };
+
+    //事件：切换图层以致可能去掉显示一些地点标识时
+    var removeSightEvent=function(map,id){
+      if ($scope.lastQuery!=null&&$scope.lastQuery!=""){
+        querySight(map,$scope.lastQuery);
+      }else{
+        removeSight(map,id);
       }
     };
 
@@ -62,7 +98,7 @@ angular.module('app.homeControllers',[])
     var loadMap=function() {
       $rootScope.lati=31.245554;//定位失败时默认位置：东方明珠
       $rootScope.longi=121.506191;
-      var map, toolBar, geolocation;
+      var toolBar, geolocation;
       map = new AMap.Map('container', {
         resizeEnable: true,
         zoom:13,
@@ -146,7 +182,23 @@ angular.module('app.homeControllers',[])
         $state.go('login');
       });
 
+    //搜索功能
+    //将搜索词加入到后台历史记录功能
+    $scope.search=function(query){
+      if (query!=null){
+        $scope.lastQuery=query;
+        querySight(map,query);
+      }
+    };
 
+    //图层变换功能
+    $scope.layer=function(item){
+      if (item.checked){
+        addSightEvent(map,item.id);
+      }else{
+        removeSightEvent(map,item.id);
+      }
+    };
 
     /*菜单栏的固定格式*/
     {
