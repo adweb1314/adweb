@@ -11,6 +11,18 @@ angular.module('app.homeControllers',[])
       $scope.expand=false;
     };
 
+    //点击标识弹出信息框的控制变量
+    //单击标识事件的设置
+    //内容生成函数
+    var infoWindow = new AMap.InfoWindow({offset: new AMap.Pixel(0, -30)});
+    function markerClick(e) {
+      infoWindow.setContent(e.target.content);
+      infoWindow.open(map, e.target.getPosition());
+    }
+    function infoCreater(sight_name){
+      return("<a href=\"#/rootTab/sight/"+sight_name+"\">"+sight_name+"</a>");
+    }
+
     //用来初始化地图，显示所有景观地点标识的函数
     var showSight=function(map){
       var i;
@@ -20,9 +32,12 @@ angular.module('app.homeControllers',[])
         var marker = new AMap.Marker({
           map: map,
           icon: "http://localhost:8080/img/my_mark_"+s.sight_type_id+".png",
-          position: [s.sight_longi, s.sight_lati],
+          position: [s.sight_longi, s.sight_lati]
         });
         markers.push(marker);
+        marker.content=infoCreater(s.sight_name);
+        marker.on('click',markerClick);
+        marker.emit('click',{target:marker});
       }
     };
 
@@ -35,8 +50,12 @@ angular.module('app.homeControllers',[])
           markers[i] = new AMap.Marker({
             map: map,
             icon: "http://localhost:8080/img/my_mark_"+s.sight_type_id+".png",
-            position: [s.sight_longi, s.sight_lati],
+            position: [s.sight_longi, s.sight_lati]
           });
+          var marker=markers[i];
+          marker.content=infoCreater(s.sight_name);
+          marker.on('click',markerClick);
+          marker.emit('click',{target:marker});
         }
       }
     };
@@ -70,24 +89,24 @@ angular.module('app.homeControllers',[])
           markers[i].setMap(null);
         }
       }
+      selfMarker.setMap(null);
+      map.setFitView();
     };
 
     //事件：切换图层以致可能额外显示一些地点标识时
     var addSightEvent=function(map,id){
-      if ($scope.lastQuery!=null&&$scope.lastQuery!=""){
-        querySight(map,$scope.lastQuery);
-      }else{
-        addSight(map,id);
+      if ($scope.lastQuery==null){
+        $scope.lastQuery="";
       }
+      querySight(map,$scope.lastQuery);
     };
 
     //事件：切换图层以致可能去掉显示一些地点标识时
     var removeSightEvent=function(map,id){
-      if ($scope.lastQuery!=null&&$scope.lastQuery!=""){
-        querySight(map,$scope.lastQuery);
-      }else{
-        removeSight(map,id);
+      if ($scope.lastQuery==null){
+        $scope.lastQuery="";
       }
+      querySight(map,$scope.lastQuery);
     };
 
     //加载地图
@@ -99,6 +118,7 @@ angular.module('app.homeControllers',[])
       $rootScope.lati=31.245554;//定位失败时默认位置：东方明珠
       $rootScope.longi=121.506191;
       var toolBar, geolocation;
+
       map = new AMap.Map('container', {
         resizeEnable: true,
         zoom:13,
@@ -133,6 +153,14 @@ angular.module('app.homeControllers',[])
           toolBar = new AMap.ToolBar();
           map.addControl(toolBar);
           showSight(map);
+          selfMarker = new AMap.Marker({
+            map: map,
+            icon: "http://localhost:8080/img/my_mark_self.png",
+            position: [$rootScope.longi, $rootScope.lati]
+          });
+          selfMarker.content = '我的位置';
+          selfMarker.on('click', markerClick);
+          selfMarker.emit('click', {target: marker});
         });
         //定位失败
         AMap.event.addListener(geolocation, 'error', function(data) {
@@ -142,6 +170,14 @@ angular.module('app.homeControllers',[])
             template: '定位失败，显示默认位置'
           });
           showSight(map);
+          selfMarker = new AMap.Marker({
+            map: map,
+            icon: "http://localhost:8080/img/my_mark_self.png",
+            position: [$rootScope.longi, $rootScope.lati]
+          });
+          selfMarker.content = '我的位置';
+          selfMarker.on('click', markerClick);
+          selfMarker.emit('click', {target: marker});
         });
       });
     };
@@ -185,10 +221,11 @@ angular.module('app.homeControllers',[])
     //搜索功能
     //将搜索词加入到后台历史记录功能
     $scope.search=function(query){
-      if (query!=null){
-        $scope.lastQuery=query;
-        querySight(map,query);
+      if (query==null) {
+        query="";
       }
+      $scope.lastQuery=query;
+      querySight(map,query);
     };
 
     //图层变换功能
