@@ -147,6 +147,26 @@ angular.module('app', ['ionic',
           controller: 'MineCtrl'
         }
       }
+    })
+    .state('rootTab.mine-changeInfo', {
+    url: '/mine/changeInfo',
+    cache: 'false',
+    views: {
+      'rootTab-mine': {
+        templateUrl: 'templates/mine/mine-changeInfo.html',
+        controller: 'ChangeInfoCtrl'
+      }
+    }
+  })
+    .state('rootTab.mine-changePw', {
+      url: '/mine/changePw',
+      cache: 'false',
+      views: {
+        'rootTab-mine': {
+          templateUrl: 'templates/mine/mine-changePw.html',
+          controller: 'ChangePwCtrl'
+        }
+      }
     });
 
   // if none of the above states are matched, use this as the fallback
