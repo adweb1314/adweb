@@ -9,8 +9,29 @@
       <ion-item class="my-small-padding-up-bottom positive my-text-big">
         全部评论
       </ion-item>
-      <ion-item>
-        {{sight_name}}全部评论
+      <ion-item ng-show="sightCommentList==null||sightCommentList.length==0">
+        <h2>该景观暂无评论</h2>
+      </ion-item>
+      <ion-item ng-repeat="sightComment in sightCommentList">
+        <div class="padding">
+          <div>
+            <h2>{{sightComment.user_id}}的评论：</h2>
+          </div>
+          <div>
+            <img src="img/star-on-big.png" ng-if="sightComment.grade>=1"/>
+            <img src="img/star-on-big.png" ng-if="sightComment.grade>=2"/>
+            <img src="img/star-on-big.png" ng-if="sightComment.grade>=3"/>
+            <img src="img/star-on-big.png" ng-if="sightComment.grade>=4"/>
+            <img src="img/star-on-big.png" ng-if="sightComment.grade>=5"/>
+            <img src="img/star-off-big.png" ng-if="sightComment.grade<=4"/>
+            <img src="img/star-off-big.png" ng-if="sightComment.grade<=3"/>
+            <img src="img/star-off-big.png" ng-if="sightComment.grade<=2"/>
+            <img src="img/star-off-big.png" ng-if="sightComment.grade<=1"/>
+          </div>
+          <div>
+            &nbsp&nbsp&nbsp&nbsp{{sightComment.comment}}
+          </div>
+        </div>
       </ion-item>
 
     </div>

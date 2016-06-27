@@ -44,13 +44,21 @@
           </ion-item>
 
           <ion-item class="item item-icon-right"
-                    ng-repeat="sight in sightList"
+                    ng-repeat="sight in sightList | orderBy:orderKey"
                     ng-if="sight.sight_type_id==sightType.sight_type_id
                         &&sight.sight_name.indexOf(lastQuery)>=0"
                     ng-click="popover.hide().then(doForward())"
                     href="#/rootTab/sight/{{sight.sight_name}}">
             <img src="http://localhost:8080/img/my_mark_{{sightType.sight_type_id}}.png"/>
-            {{sight.sight_name}}
+            <span>{{sight.sight_name}}</span>
+            <span class="my-text-small">
+              (&nbsp&nbsp{{text}}:
+              <span ng-show="sortType=='sortByGrade'">{{-sight.grade}}</span>
+              <span ng-show="sortType=='sortByCollection'">{{-sight.collectionNum}}</span>
+              <span ng-show="sortType=='sortByStep'">{{-sight.stepNum}}</span>
+              <span ng-show="sortType=='sortByWish'">{{-sight.wishNum}}</span>
+              )
+            </span>
             <i class="icon ion-chevron-right icon-accessory"></i>
           </ion-item>
 

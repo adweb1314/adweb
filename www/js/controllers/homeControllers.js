@@ -272,6 +272,14 @@ angular.module('app.homeControllers',[])
       }
       $scope.lastQuery=query;
       querySight(map,query);
+      if (query!="") {
+        $http.get("http://localhost:8080/history/"+$rootScope.user_id+"/"+"query")
+          .success(function(ret){
+            if (ret.flag==1){
+              alert("yes,history.")
+            }
+          })
+      }
     };
 
     //图层变换功能

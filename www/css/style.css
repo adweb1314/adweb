@@ -66,6 +66,11 @@ ion-content {
   height: 430px;
 }
 
+.my-map-wrapper-small {
+  height: 200px;
+}
+
+
 #pover-navi {
   height: 19em;
   width: 130px;
