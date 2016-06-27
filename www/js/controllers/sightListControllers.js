@@ -62,9 +62,10 @@ angular.module('app.sightListControllers',[])
     // 并设置默认排序为评分排序的函数
     var getOneDate=function(s){
       $http.get("http://localhost:8080/comment/"+s.sight_name).success(function(ret){
-        var j,grade=0;
+        var j,grade=0,gradeNum=[ret.length,0,0,0,0,0];
         for (j=0;j<ret.length;j++){
           grade+=Number(ret[j].grade);
+          gradeNum[Number(ret[j].grade)]++;
         }
         if (ret!=null&&ret.length>0){
           grade=grade/ret.length;
@@ -84,6 +85,7 @@ angular.module('app.sightListControllers',[])
                 sight_zoom: s.sight_zoom,
                 sight_detail: s.sight_detail,
                 grade: -grade,
+                gradeNum: gradeNum,
                 collectionNum: -collectionNum,
                 stepNum: -stepNum,
                 wishNum: -wishNum
@@ -111,8 +113,16 @@ angular.module('app.sightListControllers',[])
         //$scope.sightList = ret;
         $rootScope.sightList = ret;
         $http.get("http://localhost:8080/sight_type").success(function (ret) {
-          $scope.sightTypeList = ret;
-          $rootScope.sightTypeList = ret;
+          var tempList=[{
+            sight_type_id:0,
+            sight_type_name:"全部类别"
+          }];
+          var i;
+          for (i=0;i<ret.length;i++){
+            tempList.push(ret[i])
+          }
+          $scope.sightTypeList = tempList;
+          $rootScope.sightTypeList = tempList;
           getSortData();
         })
       })
@@ -175,6 +185,7 @@ angular.module('app.sightListControllers',[])
     //绘制景观地图
     var map;
     map = new AMap.Map('container', {
+      resizeEnable: true,
       zoom: $scope.sight.sight_zoom,
       center: [$scope.sight.sight_longi, $scope.sight.sight_lati]
     });
@@ -247,14 +258,18 @@ angular.module('app.sightListControllers',[])
     };
 
     //获取评论数据
-    $http.get("http://localhost:8080/comment/"+$scope.sight_name)
-      .success(function(ret){
-        var i,tempList=[];
-        for (i=ret.length-1;i>=0&&i>=ret.length-5;i--){
-          tempList.push(ret[i]);
-        }
-        $scope.sightCommentList=tempList;
-      });
+    var getAllComment=function(){
+      $http.get("http://localhost:8080/comment/"+$scope.sight_name)
+        .success(function(ret){
+          var i,tempList=[];
+          for (i=ret.length-1;i>=0&&i>=ret.length-5;i--){
+            tempList.push(ret[i]);
+          }
+          $scope.sightCommentList=tempList;
+          $scope.cancelExpand2();
+        });
+    };
+    getAllComment();
 
     //选择路径导航时
     $scope.goRoute=function(){
@@ -263,6 +278,20 @@ angular.module('app.sightListControllers',[])
         name:$scope.sight.sight_name,
         lati:$scope.sight.sight_lati,
         longi:$scope.sight.sight_longi};
+    };
+
+    //新建评论功能
+    $scope.addComment=function(grade,comment){
+      $http.get("http://localhost:8080/comment/"
+        +$rootScope.user_id+"/"+$scope.sight_name+"/"+grade+"/"+comment).success(function(ret){
+        if (ret.flag==1){
+          getAllComment();
+          $ionicPopup.alert({
+            title: '系统提示',
+            template: '评论成功'
+          });
+        }
+      })
     };
 
     /*菜单栏的固定格式*/{

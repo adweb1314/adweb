@@ -3,7 +3,7 @@
     <a class="button icon ion-ios-home" href="#/rootTab/home"></a>
   </ion-nav-buttons>
   <ion-content>
-    <div class="my-computer-view">
+    <div class="padding my-computer-view">
 
       <ion-item ng-show="!expand" class="item item-image" ng-click="doExpand()">
         <span class="icon ion-ios-arrow-down"></span>
@@ -49,11 +49,11 @@
 
             <ion-item class="item item-icon-right"
                       ng-repeat="sight in sightList | orderBy:orderKey"
-                      ng-if="sight.sight_type_id==sightType.sight_type_id
+                      ng-if="(sight.sight_type_id==sightType.sight_type_id||sightType.sight_type_id==0)
                         &&sight.sight_name.indexOf(lastQuery)>=0"
                       ng-click="doForward()"
                       href="#/rootTab/sight/{{sight.sight_name}}">
-              <img src="http://localhost:8080/img/my_mark_{{sightType.sight_type_id}}.png"/>
+              <img src="http://localhost:8080/img/my_mark_{{sight.sight_type_id}}.png"/>
               <span>{{sight.sight_name}}</span>
               <span class="my-text-small">
                 (&nbsp&nbsp{{text}}:

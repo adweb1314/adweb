@@ -3,7 +3,7 @@ angular.module('app.routeControllers',[])
   .controller('RouteCtrl', function($scope,$rootScope,$ionicPopover) {
 
     //详细信息展开与收回
-    $scope.expand=true;
+    $scope.expand=false;
     $scope.doExpand=function(){
       $scope.expand=true;
     };

@@ -1,14 +1,28 @@
-angular.module('app.homeControllers',[])
+angular.module('app.nearbyControllers', [])
 
-  .controller('HomeCtrl', function($scope,$rootScope,$ionicPopup,$ionicPopover,$state,$http) {
+  .controller('NearbyCtrl', function($scope,$rootScope,$ionicPopup,$ionicPopover,$state,$http) {
+
+    //前进时禁止回退
+    $scope.doForward=function(){
+      $ionicHistory.nextViewOptions({
+        disableBack: true
+      });
+    };
 
     //详细信息展开与收回
     $scope.expand=false;
+    $scope.expand2=false;
     $scope.doExpand=function(){
       $scope.expand=true;
     };
     $scope.cancelExpand=function(){
       $scope.expand=false;
+    };
+    $scope.doExpand2=function(){
+      $scope.expand2=true;
+    };
+    $scope.cancelExpand2=function(){
+      $scope.expand2=false;
     };
 
     //点击标识弹出信息框的控制变量
@@ -127,7 +141,7 @@ angular.module('app.homeControllers',[])
       marker.content='<p>当前位置</p>';
       marker.on('click',markerClick);
       marker.emit('click',{target:marker});
-      map.setFitView();
+      //map.setFitView();
     };
 
     //事件：切换图层以致可能额外显示一些地点标识时
@@ -146,126 +160,56 @@ angular.module('app.homeControllers',[])
       querySight(map,$scope.lastQuery);
     };
 
-    //加载地图
-    //调用浏览器定位服务
-    //显示所有景观地点
-    // 的函数，加载用户数据成功后再加载地图
-    $scope.loading=true;//默认状态：地图未加载
-    var loadMap=function() {
-      $rootScope.lati=31.239666;//定位失败时默认位置：东方明珠
-      $rootScope.longi=121.499809;
-      var toolBar, geolocation;
+    //初始化地图，设置视角限制，取得视角数据
+    var map = new AMap.Map('container', {
+      resizeEnable: false,
+      zoom:13,
+      center: [$rootScope.longi, $rootScope.lati]
+    });
+    map.setLimitBounds(map.getBounds());
+    var limitBounds = map.getLimitBounds();
+    var longi1=limitBounds.southwest.lng;
+    var lati1=limitBounds.southwest.lat;
+    var longi2=limitBounds.northeast.lng;
+    var lati2=limitBounds.northeast.lat;
 
-      map = new AMap.Map('container', {
-        resizeEnable: true,
-        zoom:13,
-        center: [$rootScope.longi, $rootScope.lati]
-      });
-      toolBar = new AMap.ToolBar();
-      map.addControl(toolBar);
-      map.plugin('AMap.Geolocation', function() {
-        geolocation = new AMap.Geolocation({
-          enableHighAccuracy: true,//是否使用高精度定位，默认:true
-          timeout: 2000,          //超过2秒后停止定位，默认：无穷大
-          buttonOffset: new AMap.Pixel(10, 20),//定位按钮与设置的停靠位置的偏移量，默认：Pixel(10, 20)
-          zoomToAccuracy: true,      //定位成功后调整地图视野范围使定位位置及精度范围视野内可见，默认：false
-          buttonPosition:'RB'
-        });
-        //map.addControl(geolocation);
-        geolocation.getCurrentPosition();
-        //定位成功
-        AMap.event.addListener(geolocation, 'complete', function(data) {
-          $scope.loading=false;
-          $ionicPopup.alert({
-            title: '系统提示',
-            template: '定位成功,如有偏差请以实际位置为准'
-          });
-          $rootScope.lati=data.position.getLat();
-          $rootScope.longi=data.position.getLng();
-          map = new AMap.Map('container', {
-            resizeEnable: true,
-            zoom:13,
-            center: [data.position.getLng(), data.position.getLat()]
-          });
-          toolBar = new AMap.ToolBar();
-          map.addControl(toolBar);
-          showSight(map);
-        });
-        //定位失败
-        AMap.event.addListener(geolocation, 'error', function(data) {
-          $scope.loading=false;
-          $ionicPopup.alert({
-            title: '系统提示',
-            template: '定位失败，显示默认位置'
-          });
-          showSight(map);
-        });
-      });
-    };
-
-    //取得地点数据
-    // 取得类型数据
-    //  构造图层选择框
-    //  载入地图
-    if ($rootScope.notFirstHome==null) {
-      $rootScope.notFirstHome="樱满集在日语中读作oh my shit";
-      $http.get("http://localhost:8080/sight")
-        .success(function(ret){
-          $scope.sightList=ret;
-          $rootScope.sightList=ret;
-          $http.get("http://localhost:8080/sight_type")
-            .success(function(ret){
-              $scope.sightTypeList=ret;
-              $rootScope.sightTypeList=ret;
-              var i;
-              var devList=[];
-              for (i=0;i<$scope.sightTypeList.length;i++){
-                var s=$scope.sightTypeList[i];
-                var dev={
-                  index: i,
-                  id: s.sight_type_id,
-                  text: s.sight_type_name,
-                  checked: true
-                };
-                devList.push(dev);
-              }
-              $scope.devList=devList;
-              loadMap();
-            });
-        })
-        .error(function(){
-          $ionicPopup.alert({
-            title: '系统提示',
-            template: '由于网络问题无法连接到服务器'
-          });
-          $state.go('login');
-        });
-    }else{
-      $scope.loading=false;
+    //取得地点数据、类型数据、视角内地点数据
+    $scope.sightTypeList=$rootScope.sightTypeList;
+    if ($rootScope.sightListIn==null){
       $scope.sightList=$rootScope.sightList;
-      $scope.sightTypeList=$rootScope.sightTypeList;
-      var i;
-      var devList=[];
-      for (i=0;i<$scope.sightTypeList.length;i++){
-        var s=$scope.sightTypeList[i];
-        var dev={
-          index: i,
-          id: s.sight_type_id,
-          text: s.sight_type_name,
-          checked: true
-        };
-        devList.push(dev);
+      var sightList=[];
+      for (i=0;i<$rootScope.sightList.length;i++){
+        var s=$rootScope.sightList[i];
+        var longi=s.sight_longi;
+        var lati=s.sight_lati;
+        if ( ((longi1<=longi&&longi<=longi2)||(longi2<=longi&&longi<=longi1))
+          &&((lati1 <=lati &&lati <=lati2 )||(lati2 <=lati &&lati <=lati1 )) ){
+          sightList.push(s);
+        }
       }
-      $scope.devList=devList;
-      map = new AMap.Map('container', {
-        resizeEnable: true,
-        zoom:13,
-        center: [$rootScope.longi, $rootScope.lati]
-      });
-      var toolBar = new AMap.ToolBar();
-      map.addControl(toolBar);
-      showSight(map);
+      $scope.sightList=sightList;
+      $rootScope.sightListIn=sightList;
+    }else{
+      $scope.sightList=$rootScope.sightListIn;
     }
+
+    //构造图层选择框
+    var i;
+    var devList=[];
+    for (i=0;i<$scope.sightTypeList.length;i++){
+      var s=$scope.sightTypeList[i];
+      var dev={
+        index: i,
+        id: s.sight_type_id,
+        text: s.sight_type_name,
+        checked: true
+      };
+      devList.push(dev);
+    }
+    $scope.devList=devList;
+
+    //载入地点标识
+    showSight(map);
 
     //搜索功能
     //将搜索词加入到后台历史记录功能
@@ -294,6 +238,49 @@ angular.module('app.homeControllers',[])
       }
     };
 
+    //排序功能
+    $scope.sortByGrade=function(){
+      $scope.sortType='sortByGrade';
+      $scope.orderKey='grade';
+      $scope.text='平均评分';
+    };
+    $scope.sortByCollection=function(){
+      $scope.sortType='sortByCollection';
+      $scope.orderKey='collectionNum';
+      $scope.text='收藏数';
+
+    };
+    $scope.sortByStep=function(){
+      $scope.sortType='sortByStep';
+      $scope.orderKey='stepNum';
+      $scope.text='足迹人数';
+    };
+    $scope.sortByWish=function(){
+      $scope.sortType='sortByWish';
+      $scope.orderKey='wishNum';
+      $scope.text='心愿人数';
+    };
+    $scope.sortByGrade();//默认排序为评分排序
+
+    //搜索功能2
+    //将搜索词加入到后台历史记录功能
+    $scope.lastQuery2="";
+    $scope.search2=function(query){
+      if (query==null) {
+        query="";
+      }
+      $scope.lastQuery2=query;
+      if (query!="") {
+        $http.get("http://localhost:8080/history/"+$rootScope.user_id+"/"+query);
+      }
+    };
+
+    //时不时地锁定视野，时不时的更新一下scope
+    var centralize=function(){
+      map.setZoomAndCenter(13, [$rootScope.longi, $rootScope.lati]);
+    };
+    setInterval(centralize, 1000);
+
     /*菜单栏的固定格式*/
     {
       // .fromTemplateUrl() 方法
@@ -313,36 +300,5 @@ angular.module('app.homeControllers',[])
         $scope.popover.remove();
       });
     }
-
-    /*百度地图
-    {
-      $scope.offlineOpts = {
-        retryInterval: 10000,
-        txt: 'Offline Mode'
-      };
-      var longitude = 121.506191;
-      var latitude = 31.245554;
-      $scope.mapOptions = {
-        center: {
-          longitude: longitude,
-          latitude: latitude
-        },
-        zoom: 13,
-        city: 'ShangHai',
-        markers: [{
-          longitude: longitude,
-          latitude: latitude,
-          icon: 'img/mappiont.png',
-          width: 49,
-          height: 60,
-          title: 'Where',
-          content: "www.baidu.com"
-        }]
-      };
-
-      $scope.loadMap = function(map) {
-        console.log(map);//gets called while map instance created
-      };
-    }*/
 
   });

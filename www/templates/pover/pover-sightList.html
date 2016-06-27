@@ -45,11 +45,11 @@
 
           <ion-item class="item item-icon-right"
                     ng-repeat="sight in sightList | orderBy:orderKey"
-                    ng-if="sight.sight_type_id==sightType.sight_type_id
+                    ng-if="(sight.sight_type_id==sightType.sight_type_id||sightType.sight_type_id==0)
                         &&sight.sight_name.indexOf(lastQuery)>=0"
                     ng-click="popover.hide().then(doForward())"
                     href="#/rootTab/sight/{{sight.sight_name}}">
-            <img src="http://localhost:8080/img/my_mark_{{sightType.sight_type_id}}.png"/>
+            <img src="http://localhost:8080/img/my_mark_{{sight.sight_type_id}}.png"/>
             <span>{{sight.sight_name}}</span>
             <span class="my-text-small">
               (&nbsp&nbsp{{text}}:

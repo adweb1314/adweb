@@ -2,9 +2,11 @@ angular.module('app', ['ionic',
   'app.loginControllers',
   'app.homeControllers',
   'app.sightListControllers',
+  'app.nearbyControllers',
+  'app.historyControllers',
   'app.routeControllers',
-  'app.mineControllers',
-  'app.controllers'])
+  'app.mineControllers'
+  ])
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
@@ -110,7 +112,7 @@ angular.module('app', ['ionic',
     })
     .state('rootTab.nearby', {
       url: '/nearby',
-      //cache: 'false',
+      cache: 'false',
       views: {
         'rootTab-nearby': {
           templateUrl: 'templates/rootTab/rootTab-nearby.html',

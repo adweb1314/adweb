@@ -4,12 +4,108 @@
     <a class="button icon ion-ios-home" href="#/rootTab/home"></a>
   </ion-nav-buttons>
   <ion-content>
+    <div class="padding my-computer-view">
 
-    <ion-list>
-      <ion-toggle  ng-model="setting">
-        附近景观
-      </ion-toggle>
-    </ion-list>
+      <ion-item class="my-small-padding-up-bottom positive my-text-big">
+        附近地图
+      </ion-item>
 
+      <ion-item ng-show="!expand" class="item item-image" ng-click="doExpand()">
+        <span class="icon ion-ios-arrow-down"></span>
+        地图检索菜单
+      </ion-item>
+      <ion-item ng-show="expand" class="item item-image" ng-click="cancelExpand()">
+        <span class="icon ion-ios-arrow-up"></span>
+        收起地图菜单
+      </ion-item>
+
+      <div ng-show="expand" class="item item-input-inset button-right">
+        <label class="item-input-wrapper">
+          <i class="icon ion-ios-search placeholder-icon"></i>
+          <input type="search" ng-model="filter" placeholder="在附近视野中筛选">
+        </label>
+        <button class="button button-positive my-button-small" ng-click="search(filter)">搜索</button>
+      </div>
+
+      <ion-item ng-show="expand" class="item item-image positive-border">
+      </ion-item>
+
+      <div ng-show="expand" class="item item-text-wrap my-small-padding-up-bottom">
+        图层选择：
+      </div>
+
+      <ion-checkbox ng-show="expand&&item.id!=0"
+                    ng-click="layer(item)"
+                    ng-repeat="item in devList"
+                    ng-model="item.checked"
+                    ng-checked="item.checked"
+                    class="item item-text-wrap my-small-padding-up-bottom">
+        <img src="http://localhost:8080/img/my_mark_{{item.id}}.png"/>
+        {{ item.text }}
+      </ion-checkbox>
+
+      <div class="item my-map-wrapper-middle">
+        <!--<baidu-map id="baidu-map" options="mapOptions" ak="7EZoSoWRPRCTaK36Q7vgSGVN506t6WM9" offline="offlineOpts" on-map-loaded="loadMap(map)"></baidu-map>-->
+        <div id="container"></div>
+      </div>
+
+      <ion-list class="padding">
+      </ion-list>
+
+      <ion-item class="my-small-padding-up-bottom positive my-text-big">
+        附近景观列表
+      </ion-item>
+
+      <ion-item ng-show="!expand2" class="item item-image" ng-click="doExpand2()">
+        <span class="icon ion-ios-arrow-down"></span>
+        列表检索菜单
+      </ion-item>
+      <ion-item ng-show="expand2" class="item item-image" ng-click="cancelExpand2()">
+        <span class="icon ion-ios-arrow-up"></span>
+        收起列表菜单
+      </ion-item>
+
+      <div ng-show="expand2" class="item item-input-inset button-right">
+        <label class="item-input-wrapper">
+          <i class="icon ion-ios-search placeholder-icon"></i>
+          <input type="search" ng-model="filter2" placeholder="在附近景观列表中搜索">
+        </label>
+        <button class="button button-positive my-button-small" ng-click="search2(filter2)">搜索</button>
+      </div>
+
+      <ion-item ng-show="expand" class="item item-image positive-border">
+      </ion-item>
+
+      <div ng-show="expand2" class="item item-text-wrap my-small-padding-up-bottom">
+        <span class="my-button-small">排序：</span>
+        <span ng-if="sortType=='sortByGrade'" class="button button-positive my-button-small" ng-click="sortByGrade()">评分</span>
+        <span ng-if="sortType!='sortByGrade'" class="button my-button-positive-weak my-button-small" ng-click="sortByGrade()">评分</span>
+        <span ng-if="sortType=='sortByCollection'" class="button button-positive my-button-small" ng-click="sortByCollection()">收藏</span>
+        <span ng-if="sortType!='sortByCollection'" class="button my-button-positive-weak my-button-small" ng-click="sortByCollection()">收藏</span>
+        <span ng-if="sortType=='sortByStep'" class="button button-positive my-button-small" ng-click="sortByStep()">足迹</span>
+        <span ng-if="sortType!='sortByStep'" class="button my-button-positive-weak my-button-small" ng-click="sortByStep()">足迹</span>
+        <span ng-if="sortType=='sortByWish'" class="button button-positive my-button-small" ng-click="sortByWish()">心愿</span>
+        <span ng-if="sortType!='sortByWish'" class="button my-button-positive-weak my-button-small" ng-click="sortByWish()">心愿</span>
+      </div>
+
+      <ion-item class="item item-icon-right"
+                ng-repeat="sight in sightList | orderBy:orderKey"
+                ng-if="sight.sight_name.indexOf(lastQuery2)>=0"
+                ng-click="doForward()"
+                href="#/rootTab/sight/{{sight.sight_name}}">
+        <img src="http://localhost:8080/img/my_mark_{{sight.sight_type_id}}.png"/>
+        <span>{{sight.sight_name}}</span>
+              <span class="my-text-small">
+                (&nbsp&nbsp{{text}}:
+                <span ng-show="sortType=='sortByGrade'">{{-sight.grade}}</span>
+                <span ng-show="sortType=='sortByCollection'">{{-sight.collectionNum}}</span>
+                <span ng-show="sortType=='sortByStep'">{{-sight.stepNum}}</span>
+                <span ng-show="sortType=='sortByWish'">{{-sight.wishNum}}</span>
+                )
+              </span>
+        <i class="icon ion-chevron-right icon-accessory"></i>
+      </ion-item>
+
+    </div>
   </ion-content>
 </ion-view>

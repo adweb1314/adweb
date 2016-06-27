@@ -36,6 +36,12 @@ ion-content {
   margin-right: -10%;
 }
 
+.my-textarea {
+  resize: none;
+  width: 100%;
+  background-color: aliceblue;
+}
+
 .my-no-padding {
   padding: 0;
 }
@@ -62,14 +68,22 @@ ion-content {
   background-color: #80f080;
 }
 
+.my-button-positive-weak {
+  color: white;
+  background-color: #b0b0ff;
+}
+
 .my-map-wrapper {
-  height: 430px;
+  height: 400px;
+}
+
+.my-map-wrapper-middle {
+  height: 300px;
 }
 
 .my-map-wrapper-small {
   height: 200px;
 }
-
 
 #pover-navi {
   height: 19em;
@@ -77,12 +91,12 @@ ion-content {
 }
 
 #pover-sightList {
-  height: 400px;
+  height: 424px;
   width: 310px;
 }
 
 .slider {
-  height: 430px;
+  /*height: 400px;*/
 }
 
 .my-slider-comment {

@@ -34,8 +34,8 @@
       <ion-item class="my-small-padding-up-bottom positive my-text-big">
         基本信息
       </ion-item>
-      <ion-item>
-        基本信息
+      <ion-item class="item-text-wrap">
+        &nbsp&nbsp&nbsp&nbsp{{sight.sight_description}}
       </ion-item>
       <ion-item class="my-small-padding-up-bottom">
         <a class="button button-block button-positive"
@@ -63,12 +63,17 @@
 
       <ion-item>
         <div>
-          <img src="img/star-on-big.png"/>
-          <img src="img/star-on-big.png"/>
-          <img src="img/star-on-big.png"/>
-          <img src="img/star-on-big.png"/>
-          <img src="img/star-on-big.png"/>
-          <span class="my-float-right">({{10}}个人评分)</span>
+          <img src="img/star-on-big.png" ng-if="-sight.grade>=1"/>
+          <img src="img/star-on-big.png" ng-if="-sight.grade>=2"/>
+          <img src="img/star-on-big.png" ng-if="-sight.grade>=3"/>
+          <img src="img/star-on-big.png" ng-if="-sight.grade>=4"/>
+          <img src="img/star-on-big.png" ng-if="-sight.grade>=5"/>
+          <img src="img/star-off-big.png" ng-if="-sight.grade<5"/>
+          <img src="img/star-off-big.png" ng-if="-sight.grade<4"/>
+          <img src="img/star-off-big.png" ng-if="-sight.grade<3"/>
+          <img src="img/star-off-big.png" ng-if="-sight.grade<2"/>
+          <img src="img/star-off-big.png" ng-if="-sight.grade<1"/>
+          <span class="my-float-right">{{-sight.grade}}分&nbsp({{sight.gradeNum[0]}}个人评分)</span>
         </div>
         <div ng-show="expand">
           <div class="padding">
@@ -79,6 +84,7 @@
             <img src="img/star-off-big.png"/>
             <img src="img/star-off-big.png"/>
             <img src="img/star-off-big.png"/>
+            ({{sight.gradeNum[1]}}个人)
           </div>
           <div>
             <img src="img/star-on-big.png"/>
@@ -86,6 +92,7 @@
             <img src="img/star-off-big.png"/>
             <img src="img/star-off-big.png"/>
             <img src="img/star-off-big.png"/>
+            ({{sight.gradeNum[2]}}个人)
           </div>
           <div>
             <img src="img/star-on-big.png"/>
@@ -93,6 +100,7 @@
             <img src="img/star-on-big.png"/>
             <img src="img/star-off-big.png"/>
             <img src="img/star-off-big.png"/>
+            ({{sight.gradeNum[3]}}个人)
           </div>
           <div>
             <img src="img/star-on-big.png"/>
@@ -100,6 +108,7 @@
             <img src="img/star-on-big.png"/>
             <img src="img/star-on-big.png"/>
             <img src="img/star-off-big.png"/>
+            ({{sight.gradeNum[4]}}个人)
           </div>
           <div>
             <img src="img/star-on-big.png"/>
@@ -107,6 +116,7 @@
             <img src="img/star-on-big.png"/>
             <img src="img/star-on-big.png"/>
             <img src="img/star-on-big.png"/>
+            ({{sight.gradeNum[5]}}个人)
           </div>
         </div>
         <div class="padding">
@@ -149,6 +159,44 @@
           </button>
         </div>
       </ion-item>
+
+      <ion-item ng-show="!expand2" class="item item-image" ng-click="doExpand2()">
+        <span class="icon ion-ios-arrow-down"></span>
+        我要评论
+      </ion-item>
+      <ion-item ng-show="expand2" class="item item-image" ng-click="cancelExpand2()">
+        <span class="icon ion-ios-arrow-up"></span>
+        收起评论
+      </ion-item>
+      <ion-item ng-show="expand2" class="item-text-wrap">
+        <div class="text-left">
+          <span>评分：</span>
+          <select ng-model="selectedGrade" ng-options="d for d in [1,2,3,4,5]"></select>
+          <img src="img/star-on-big.png" ng-if="selectedGrade>=1"/>
+          <img src="img/star-on-big.png" ng-if="selectedGrade>=2"/>
+          <img src="img/star-on-big.png" ng-if="selectedGrade>=3"/>
+          <img src="img/star-on-big.png" ng-if="selectedGrade>=4"/>
+          <img src="img/star-on-big.png" ng-if="selectedGrade>=5"/>
+          <img src="img/star-off-big.png" ng-if="selectedGrade<5"/>
+          <img src="img/star-off-big.png" ng-if="selectedGrade<4"/>
+          <img src="img/star-off-big.png" ng-if="selectedGrade<3"/>
+          <img src="img/star-off-big.png" ng-if="selectedGrade<2"/>
+          <img src="img/star-off-big.png" ng-if="selectedGrade<1"/>
+        </div>
+        <textarea rows='5' class="my-textarea padding my-top-margin my-bottom-margin" ng-model="newComment" placeholder='请在此输入评论'></textarea>
+        <div class="text-right">
+          <button ng-show="selectedGrade==null||newComment==null||newComment==''"
+                  class="button button-stable my-button-small">
+            提交
+          </button>
+          <button ng-click="addComment(selectedGrade,newComment)"
+             ng-show="selectedGrade!=null&&newComment!=null&&newComment!=''"
+             class="button button-positive my-button-small">
+            提交
+          </button>
+        </div>
+      </ion-item>
+
       <ion-item ng-show="sightCommentList==null||sightCommentList.length==0">
         <h2>(该景观暂无评论)</h2>
       </ion-item>
@@ -170,25 +218,12 @@
                 <img src="img/star-off-big.png" ng-if="sightComment.grade<=2"/>
                 <img src="img/star-off-big.png" ng-if="sightComment.grade<=1"/>
               </div>
-              <div>
+              <div class="item-text-wrap">
                 &nbsp&nbsp&nbsp&nbsp{{sightComment.comment}}
               </div>
             </div>
           </ion-slide>
         </ion-slide-box>
-      </ion-item>
-
-      <ion-item ng-show="!expand2" class="item item-image" ng-click="doExpand2()">
-        <span class="icon ion-ios-arrow-down"></span>
-        我要评论
-      </ion-item>
-      <ion-item ng-show="expand2" class="item item-image" ng-click="cancelExpand2()">
-        <span class="icon ion-ios-arrow-up"></span>
-        收起评论
-      </ion-item>
-
-      <ion-item ng-show="expand2">
-        这里有个评论框
       </ion-item>
 
       <ion-item class="my-small-padding-up-bottom">

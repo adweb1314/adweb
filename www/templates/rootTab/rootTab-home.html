@@ -4,7 +4,7 @@
     <a class="button icon ion-ios-home" href="#/rootTab/home"></a>
   </ion-nav-buttons>
   <ion-content>
-    <div class="my-computer-view">
+    <div class="padding my-computer-view">
 
       <ion-item ng-show="!expand&&!loading" class="item item-image" ng-click="doExpand()">
         <span class="icon ion-ios-arrow-down"></span>
@@ -30,7 +30,7 @@
         图层选择：
       </div>
 
-      <ion-checkbox ng-show="expand"
+      <ion-checkbox ng-show="expand&&item.id!=0"
                     ng-click="layer(item)"
                     ng-repeat="item in devList"
                     ng-model="item.checked"
