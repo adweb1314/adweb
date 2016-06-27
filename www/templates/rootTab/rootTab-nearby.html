@@ -88,13 +88,24 @@
         <span ng-if="sortType!='sortByWish'" class="button my-button-positive-weak my-button-small" ng-click="sortByWish()">心愿</span>
       </div>
 
-      <ion-item class="item item-icon-right"
-                ng-repeat="sight in sightList | orderBy:orderKey"
-                ng-if="sight.sight_name.indexOf(lastQuery2)>=0"
-                ng-click="doForward()"
-                href="#/rootTab/sight/{{sight.sight_name}}">
-        <img src="http://localhost:8080/img/my_mark_{{sight.sight_type_id}}.png"/>
-        <span>{{sight.sight_name}}</span>
+      <ion-slide-box class="my-white-background" on-slide-changed="slideHasChanged($index)">
+        <ion-slide ng-repeat="sightType in sightTypeList">
+          <ion-list class="list list-inset">
+
+            <ion-item class="item item-text-wrap text-center my-no-padding-bottom item-positive">
+              {{sightType.sight_type_name}}
+              <br/>
+              <span class="my-text-small">(tip:水平滑动切换景观类别)</span>
+            </ion-item>
+
+            <ion-item class="item item-icon-right"
+                      ng-repeat="sight in sightList | orderBy:orderKey"
+                      ng-if="(sight.sight_type_id==sightType.sight_type_id||sightType.sight_type_id==0)
+                        &&sight.sight_name.indexOf(lastQuery2)>=0"
+                      ng-click="doForward()"
+                      href="#/rootTab/sight/{{sight.sight_name}}">
+              <img src="http://localhost:8080/img/my_mark_{{sight.sight_type_id}}.png"/>
+              <span>{{sight.sight_name}}</span>
               <span class="my-text-small">
                 (&nbsp&nbsp{{text}}:
                 <span ng-show="sortType=='sortByGrade'">{{-sight.grade}}</span>
@@ -103,8 +114,12 @@
                 <span ng-show="sortType=='sortByWish'">{{-sight.wishNum}}</span>
                 )
               </span>
-        <i class="icon ion-chevron-right icon-accessory"></i>
-      </ion-item>
+              <i class="icon ion-chevron-right icon-accessory"></i>
+            </ion-item>
+
+          </ion-list>
+        </ion-slide>
+      </ion-slide-box>
 
     </div>
   </ion-content>

@@ -25,6 +25,9 @@ angular.module('app.nearbyControllers', [])
       $scope.expand2=false;
     };
 
+    //滑动框默认格式
+    $scope.myActiveSlide = 1;
+
     //点击标识弹出信息框的控制变量
     //单击标识事件的设置
     //内容生成函数
