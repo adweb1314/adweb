@@ -76,17 +76,19 @@ angular.module('app.sightValueControllers',[])
           var l=[ret[i].line_longi, ret[i].line_lati];
           line.push(l);
         }
-        line.push([ret[0].line_longi, ret[0].line_lati]);
-        $rootScope.line=line;
-        var polyline = new AMap.Polyline({
-          path: line,          //设置线覆盖物路径
-          strokeColor: "#3366FF", //线颜色
-          strokeOpacity: 1,       //线透明度
-          strokeWeight: 2,        //线宽
-          strokeStyle: "solid",   //线样式
-          strokeDasharray: [10, 5] //补充线样式
-        });
-        polyline.setMap(map);
+        if (ret.length>0){
+          line.push([ret[0].line_longi, ret[0].line_lati]);
+          $rootScope.line=line;
+          var polyline = new AMap.Polyline({
+            path: line,          //设置线覆盖物路径
+            strokeColor: "#3366FF", //线颜色
+            strokeOpacity: 1,       //线透明度
+            strokeWeight: 2,        //线宽
+            strokeStyle: "solid",   //线样式
+            strokeDasharray: [10, 5] //补充线样式
+          });
+          polyline.setMap(map);
+        }
         addMapClickEvent();
       })
     }else{

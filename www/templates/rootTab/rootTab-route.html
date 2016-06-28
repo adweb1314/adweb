@@ -15,12 +15,20 @@
         收起菜单
       </ion-item>
 
-      <ion-item ng-show="expand" class="my-small-padding-up-bottom">
-        出发地：{{start.name}}({{start.longi}},{{start.lati}})
-      </ion-item>
-      <ion-item ng-show="expand" class="my-small-padding-up-bottom">
-        目的地：{{dest.name}}({{dest.longi}},{{dest.lati}})
-      </ion-item>
+      <label ng-show="expand" class="item-input my-white-background">
+        <span class="input-label">出发地：</span>
+        <input type="text" placeholder="当前位置（默认）" ng-model="start.name"/>
+      </label>
+      <label ng-show="expand" class="item-input my-white-background">
+        <span class="input-label">目的地：</span>
+        <input type="text" placeholder="请输入目的地"ng-model="dest.name"/>
+      </label>
+      <div ng-show="expand" class="padding my-white-background">
+        <button class="button button-positive button-block" ng-click="goRoute()">
+          开始寻路
+        </button>
+      </div>
+
 
       <div class="item my-map-wrapper">
         <!--<baidu-map id="baidu-map" options="mapOptions" ak="7EZoSoWRPRCTaK36Q7vgSGVN506t6WM9" offline="offlineOpts" on-map-loaded="loadMap(map)"></baidu-map>-->
