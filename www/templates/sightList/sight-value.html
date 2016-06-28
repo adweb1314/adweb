@@ -14,6 +14,42 @@
         <div id="container"></div>
       </div>
 
+      <ion-list class="padding">
+      </ion-list>
+
+      <div class="item item-text-wrap my-small-padding-up-bottom">
+        <div class="positive my-text-big">评价类别</div>
+        <div class="text-right">
+          <span ng-repeat="i in valueTypeList">
+            <span ng-if="i.value_type==selectedType.value_type" class="button button-positive my-button-small">{{i.text}}</span>
+            <span ng-if="i.value_type!=selectedType.value_type" class="button my-button-positive-weak my-button-small" ng-click="drawValue(i)">{{i.text}}</span>
+          </span>
+        </div>
+      </div>
+
+      <div ng-repeat="i in valueTypeList"
+           ng-show="selectedType.value_type==i.value_type"
+           class="item item-text-wrap">
+        <span ng-repeat="j in valueDescriptionList[i.value_type]">
+          <button ng-click="addValue(i,j,selected,info)" class="button button-icon button-stable my-button-small">
+            <img ng-src="http://localhost:8080/img/my_mark_{{j.value_description}}.png"/>
+            {{j.text}}
+          </button>
+          <select ng-model="selected"
+                  ng-options="d.text for d in newFacility"
+                  ng-show="i.value_type==3&&j.value_description==5"
+                  class="my-top-margin">
+          </select>
+        </span>
+        <textarea type="text"
+                  rows="1"
+                  ng-model="info"
+                  ng-show="i.value_type==3"
+                  placeholder="请输入'其他'信息"
+                  class="my-textarea padding my-top-margin my-bottom-margin">
+        </textarea>
+      </div>
+
 
 
     </div>
