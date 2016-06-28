@@ -1,59 +1,5 @@
 angular.module('app.sightValueControllers',[])
 
-  //所有评论页面控制
-  .controller('SightCommentCtrl', function($scope,$rootScope,$stateParams,$ionicPopup,$ionicPopover,$http) {
-
-    //url参数传递
-    $scope.sight_name = $stateParams.sight_name;
-    $scope.user_id=$rootScope.user_id;
-
-    //获取评论数据
-    var getAllComments=function(){
-      $http.get("http://localhost:8080/comment/"+$scope.sight_name)
-        .success(function(ret){
-          var i,tempList=[];
-          for (i=ret.length-1;i>=0;i--){
-            tempList.push(ret[i]);
-          }
-          $scope.sightCommentList=tempList;
-        });
-    };
-    getAllComments();
-
-    //删除评论按钮
-    $scope.deleteComment=function(id){
-      $http.get("http://localhost:8080/comment/delete/"+id).success(function(ret){
-        if (ret.flag==1){
-          getAllComments();
-          $ionicPopup.alert({
-            title: '系统提示',
-            template: '评论删除成功'
-          });
-        }
-      })
-    };
-
-    /*菜单栏的固定格式*/{
-      // .fromTemplateUrl() 方法
-      $ionicPopover.fromTemplateUrl('templates/pover/pover-sightList.html', {
-        scope: $scope
-      }).then(function(popover) {
-        $scope.popover = popover;
-      });
-      $scope.openPopover = function($event) {
-        $scope.popover.show($event);
-      };
-      $scope.closePopover = function() {
-        $scope.popover.hide();
-      };
-      // 清除浮动框
-      $scope.$on('$destroy', function() {
-        $scope.popover.remove();
-      });
-    }
-
-  })
-
   //评价信息页面控制
   .controller('SightValueCtrl', function($scope,$rootScope,$stateParams,$ionicPopup,$ionicPopover,$ionicHistory,$http) {
 

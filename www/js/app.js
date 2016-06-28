@@ -2,7 +2,7 @@ angular.module('app', ['ionic',
   'app.loginControllers',
   'app.homeControllers',
   'app.sightListControllers',
-  'app.sightControllers',
+  'app.sightDetailControllers',
   'app.sightValueControllers',
   'app.nearbyControllers',
   'app.historyControllers',
@@ -109,6 +109,16 @@ angular.module('app', ['ionic',
         'rootTab-sightList': {
           templateUrl: 'templates/sightList/sight-value.html',
           controller: 'SightValueCtrl'
+        }
+      }
+    })
+    .state('rootTab.sight-survey', {
+      url: '/sight-survey/:sight_name',
+      cache: 'false',
+      views: {
+        'rootTab-sightList': {
+          templateUrl: 'templates/sightList/sight-survey.html',
+          controller: 'SightSurveyCtrl'
         }
       }
     })

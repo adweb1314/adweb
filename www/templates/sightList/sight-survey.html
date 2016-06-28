@@ -1,0 +1,71 @@
+<ion-view view-title="调查问卷">
+  <ion-nav-buttons side="right">
+    <button class="button icon ion-android-menu" ng-click="openPopover($event)"></button>
+    <a class="button icon ion-ios-home" href="#/rootTab/home"></a>
+  </ion-nav-buttons>
+  <ion-content>
+    <div class="padding my-computer-view">
+
+      <div ng-repeat="q in single">
+        <ion-item class="item-text-wrap">
+          <span class="my-text-big positive">单选{{q.index+1}}:</span>
+          <span>{{q.question}}</span>
+        </ion-item>
+        <ion-item class="item-text-wrap">
+          <ion-radio ng-repeat="a in q.option"
+                     ng-value="a.index"
+                     ng-model="singleAns[q.index]">
+            {{a.index+1}}&nbsp&nbsp{{a.answer}}
+          </ion-radio>
+          <div class="my-top-margin text-right">
+            选择{{q.index+1}}:&nbsp&nbsp[{{singleAns[q.index]+1}}]
+          </div>
+        </ion-item>
+        <ion-list class="padding"></ion-list>
+      </div>
+
+      <div ng-repeat="q in multi">
+        <ion-item class="item-text-wrap">
+          <span class="my-text-big positive">多选{{q.index+1}}:</span>
+          <span>{{q.question}}</span>
+        </ion-item>
+        <ion-item class="item-text-wrap">
+          <ion-checkbox ng-repeat="a in q.option"
+                        ng-model="a.checked"
+                        ng-checked="a.checked">
+            {{a.index+1}}&nbsp&nbsp{{a.answer}}
+          </ion-checkbox>
+          <div class="my-top-margin text-right">
+            选择{{q.index+1}}:
+            <span ng-repeat="a in q.option" ng-show="a.checked">&nbsp&nbsp[{{a.index+1}}]</span>
+          </div>
+        </ion-item>
+        <ion-list class="padding"></ion-list>
+      </div>
+
+      <div ng-repeat="q in other">
+        <ion-item class="item-text-wrap">
+          <span class="my-text-big positive">其他{{q.index+1}}:</span>
+          <span>{{q.question}}</span>
+        </ion-item>
+        <ion-item class="item-text-wrap">
+          <textarea type="text"
+                    rows="5"
+                    ng-model="content[q.index]"
+                    placeholder="请输入"
+                    class="my-textarea padding my-top-margin my-bottom-margin">
+          </textarea>
+          <div>
+            所写内容{{q.index+1}}:&nbsp&nbsp{{content[q.index]}}
+          </div>
+        </ion-item>
+        <ion-list class="padding"></ion-list>
+      </div>
+
+      <div class="padding">
+        <button class="button button-block button-positive" ng-click="submit()">提交</button>
+      </div>
+
+    </div>
+  </ion-content>
+</ion-view>
