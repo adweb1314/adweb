@@ -40,7 +40,7 @@
                     ng-model="item.checked"
                     ng-checked="item.checked"
                     class="item item-text-wrap my-small-padding-up-bottom">
-        <img src="http://localhost:8080/img/my_mark_{{item.id}}.png"/>
+        <img ng-src="http://localhost:8080/img/my_mark_{{item.id}}.png"/>
         {{ item.text }}
       </ion-checkbox>
 
@@ -104,7 +104,7 @@
                         &&sight.sight_name.indexOf(lastQuery2)>=0"
                       ng-click="doForward()"
                       href="#/rootTab/sight/{{sight.sight_name}}">
-              <img src="http://localhost:8080/img/my_mark_{{sight.sight_type_id}}.png"/>
+              <img ng-src="http://localhost:8080/img/my_mark_{{sight.sight_type_id}}.png"/>
               <span>{{sight.sight_name}}</span>
               <span class="my-text-small">
                 (&nbsp&nbsp{{text}}:

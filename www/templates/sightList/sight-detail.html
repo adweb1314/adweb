@@ -10,7 +10,7 @@
         基本信息
       </ion-item>
       <ion-item class="item-text-wrap">
-        {{sight_name}}：基本信息
+        &nbsp&nbsp&nbsp&nbsp{{sight.sight_description}}
       </ion-item>
 
       <ion-list class="padding">
@@ -27,23 +27,61 @@
       </ion-list>
 
       <ion-item class="my-small-padding-up-bottom positive my-text-big">
-        详细介绍
+        详细信息
       </ion-item>
       <ion-item class="item-text-wrap">
-        {{sight_name}}：详细介绍
+        &nbsp&nbsp&nbsp&nbsp{{sight.sight_detail}}
       </ion-item>
       <ion-item class="text-center">
-        <div>
-          <button class="button button-positive my-button-small"><i class="ion-plus"></i>&nbsp收藏</button>
-          <button class="button button-positive my-button-small"><i class="ion-plus"></i>&nbsp分享</button>
-          <button class="button button-positive my-button-small"><i class="ion-plus"></i>&nbsp足迹</button>
-          <button class="button button-positive my-button-small"><i class="ion-plus"></i>&nbsp心愿</button>
+        <div class="text-center">
+          <button ng-show="!isCollection"
+                  ng-click="toggleCollection()"
+                  class="button button-positive my-button-small">
+            <i class="ion-plus"></i>&nbsp收藏
+          </button>
+          <button ng-show="isCollection"
+                  ng-click="toggleCollection()"
+                  class="button button-assertive my-button-small">
+            <i class="ion-minus"></i>&nbsp收藏
+          </button>
+          <button ng-click="alert('待实现');"
+                  class="button button-positive my-button-small">
+            <i class="ion-plus"></i>&nbsp分享
+          </button>
+          <a ng-show="!isStep"
+             ng-click="toggleStep()"
+             href="#/rootTab/sight-value/{{sight_name}}"
+             class="button button-positive my-button-small">
+            <i class="ion-plus"></i>&nbsp足迹
+          </a>
+          <button ng-show="isStep"
+                  ng-click="toggleStep()"
+                  class="button button-assertive my-button-small">
+            <i class="ion-minus"></i>&nbsp足迹
+          </button>
+          <button ng-show="!isWish"
+                  ng-click="toggleWish()"
+                  class="button button-positive my-button-small">
+            <i class="ion-plus"></i>&nbsp心愿
+          </button>
+          <button ng-show="isWish"
+                  ng-click="toggleWish()"
+                  class="button button-assertive my-button-small">
+            <i class="ion-minus"></i>&nbsp心愿
+          </button>
         </div>
         <div class="padding">
         </div>
         <div>
-          <button class="button button-assertive my-button-small">&nbsp&nbsp报错&nbsp&nbsp</button>
+          <button ng-click="baocuo()" class="button button-assertive my-button-small">&nbsp&nbsp报错&nbsp&nbsp</button>
         </div>
+      </ion-item>
+
+      <ion-item class="my-small-padding-up-bottom">
+        <a class="button button-block button-positive"
+           href="#/rootTab/sight-value/{{sight_name}}">
+          详细评价
+        </a>
       </ion-item>
 
     </div>

@@ -17,7 +17,7 @@
           <div>
             <h2>{{sightComment.user_id}}的评论：</h2>
           </div>
-          <div>
+          <div class="item-button-right">
             <img src="img/star-on-big.png" ng-if="sightComment.grade>=1"/>
             <img src="img/star-on-big.png" ng-if="sightComment.grade>=2"/>
             <img src="img/star-on-big.png" ng-if="sightComment.grade>=3"/>
@@ -27,12 +27,24 @@
             <img src="img/star-off-big.png" ng-if="sightComment.grade<=3"/>
             <img src="img/star-off-big.png" ng-if="sightComment.grade<=2"/>
             <img src="img/star-off-big.png" ng-if="sightComment.grade<=1"/>
+            <button ng-show="sightComment.user_id==user_id"
+                    ng-click="deleteComment(sightComment.comment_id)"
+                    class="button button-positive my-button-small">
+              删除评论
+            </button>
           </div>
           <div class="item-text-wrap">
             &nbsp&nbsp&nbsp&nbsp{{sightComment.comment}}
           </div>
         </div>
       </ion-item>
+
+      <!--<ion-item class="my-small-padding-up-bottom">-->
+        <!--<a class="button button-block button-positive"-->
+           <!--href="#/rootTab/sight-value/{{sight_name}}">-->
+          <!--景观评价-->
+        <!--</a>-->
+      <!--</ion-item>-->
 
     </div>
   </ion-content>

@@ -53,7 +53,7 @@
                         &&sight.sight_name.indexOf(lastQuery)>=0"
                       ng-click="doForward()"
                       href="#/rootTab/sight/{{sight.sight_name}}">
-              <img src="http://localhost:8080/img/my_mark_{{sight.sight_type_id}}.png"/>
+              <img ng-src="http://localhost:8080/img/my_mark_{{sight.sight_type_id}}.png"/>
               <span>{{sight.sight_name}}</span>
               <span class="my-text-small">
                 (&nbsp&nbsp{{text}}:

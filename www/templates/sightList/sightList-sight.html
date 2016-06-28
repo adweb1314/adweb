@@ -32,7 +32,7 @@
       </ion-list>
 
       <ion-item class="my-small-padding-up-bottom positive my-text-big">
-        基本信息
+        景观资料
       </ion-item>
       <ion-item class="item-text-wrap">
         &nbsp&nbsp&nbsp&nbsp{{sight.sight_description}}
@@ -49,7 +49,7 @@
       </ion-list>
 
       <ion-item class="my-small-padding-up-bottom positive my-text-big">
-        用户评价
+        用户评论
       </ion-item>
 
       <ion-item ng-show="!expand" class="item item-image" ng-click="doExpand()">
@@ -226,18 +226,17 @@
         </ion-slide-box>
       </ion-item>
 
-      <ion-item class="my-small-padding-up-bottom">
-        <a ng-show="sightCommentList!=null&&sightCommentList.length!=0"
-           class="button button-block button-positive"
+      <ion-item ng-show="sightCommentList!=null&&sightCommentList.length!=0" class="my-small-padding-up-bottom">
+        <a class="button button-block button-positive"
            ng-click="doForward()"
            href="#/rootTab/sight-comment/{{sight_name}}">
           查看全部评论
         </a>
-        <a class="button button-block button-positive"
-           ng-click="doForward()"
-           href="#/rootTab/sight-value/{{sight_name}}">
-          评价信息
-        </a>
+        <!--<a class="button button-block button-positive"-->
+           <!--ng-click="doForward()"-->
+           <!--href="#/rootTab/sight-value/{{sight_name}}">-->
+          <!--评价信息-->
+        <!--</a>-->
       </ion-item>
 
     </div>

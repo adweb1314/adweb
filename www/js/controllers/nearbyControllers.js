@@ -1,6 +1,6 @@
 angular.module('app.nearbyControllers', [])
 
-  .controller('NearbyCtrl', function($scope,$rootScope,$ionicPopup,$ionicPopover,$state,$http) {
+  .controller('NearbyCtrl', function($scope,$rootScope,$ionicPopup,$ionicPopover,$state,$ionicHistory,$http) {
 
     //前进时禁止回退
     $scope.doForward=function(){
