@@ -20,17 +20,23 @@ angular.module('app.routeControllers',[])
     });
     toolBar = new AMap.ToolBar();
     map.addControl(toolBar);
+    //根据起终点坐标规划步行路线的函数
+    var walking=function(start,dest){
+      var walking = new AMap.Walking({
+        map: map
+      });
+      walking.search([start.longi,start.lati], [dest.longi,dest.lati]);
+    };
+    //进行路径规划的函数
+    $scope.goRoute=function() {
+      walking($scope.start,$scope.dest);
+    };
 
     //初始出发地为空，任何时候出发地点为空就从首页定位的用户所在地出发
     $scope.start={
       name:"",
       lati:$rootScope.lati,
       longi:$rootScope.longi
-    };
-
-    //进行路径规划的函数
-    $scope.goRoute=function() {
-
     };
 
     //判断有没有设定过目的地，若设定过，则直接进行一次寻路
