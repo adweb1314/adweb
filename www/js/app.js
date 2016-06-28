@@ -181,6 +181,26 @@ angular.module('app', ['ionic',
           controller: 'ChangePwCtrl'
         }
       }
+    })
+    .state('rootTab.mine-share', {
+      url: '/mine/share',
+      cache: 'false',
+      views: {
+        'rootTab-mine': {
+          templateUrl: 'templates/mine/mine-share.html',
+          controller: 'ShareCtrl'
+        }
+      }
+    })
+    .state('rootTab.mine-collection', {
+      url: '/mine/collection',
+      cache: 'false',
+      views: {
+        'rootTab-mine': {
+          templateUrl: 'templates/mine/mine-collection.html',
+          controller: 'CollectionCtrl'
+        }
+      }
     });
 
   // if none of the above states are matched, use this as the fallback

@@ -1,0 +1,38 @@
+<ion-view view-title="我的分享">
+  <ion-nav-buttons side="right">
+    <button class="button icon ion-android-menu" ng-click="openPopover($event)"></button>
+    <a class="button icon ion-ios-home" href="#/rootTab/home"></a>
+  </ion-nav-buttons>
+<ion-content>
+  <div class="padding my-computer-view">
+    <ion-slide-box class="my-white-background" on-slide-changed="slideHasChanged($index)">
+      <ion-slide ng-repeat="shareType in shareTypeList">
+        <ion-list class="list list-inset">
+
+          <ion-item class="item item-text-wrap text-center my-no-padding-bottom item-balanced">
+            {{shareType.name}}
+            <br/>
+            <span class="my-text-small">(tip:水平滑动切换收藏类别)</span>
+          </ion-item>
+          <div>
+            <ion-item class="item item-icon-right"
+                      ng-repeat="share in shareList"
+                      ng-if="((shareType.id == 0 && share.user_id == user_id) || (shareType.id == 1 && share.to_user_id == user_id))"
+                      href="#/rootTab/sight/{{share.sight_name}}">
+              <span
+                        class="button button-stable button-icon my-button-small">
+                <img ng-src="http://localhost:8080/img/my_mark_{{share.sight_type_id}}.png"/>
+                <span>{{share.sight_name}}</span>
+                <span class="my-text-small" ng-if="(shareType.id == 0 && share.user_id == user_id)">（分享给：{{share.to_user_id}}）</span>
+                <span class="my-text-small" ng-if="(shareType.id == 1 && share.to_user_id == user_id)">（分享自：{{share.user_id}}）</span>
+              </span>
+            </ion-item>
+
+          </div>
+        </ion-list>
+      </ion-slide>
+    </ion-slide-box>
+
+  </div>
+</ion-content>
+</ion-view>

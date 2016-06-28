@@ -1,0 +1,68 @@
+<ion-view view-title="我的收藏">
+  <ion-nav-buttons side="right">
+    <button class="button icon ion-android-menu" ng-click="openPopover($event)"></button>
+    <a class="button icon ion-ios-home" href="#/rootTab/home"></a>
+  </ion-nav-buttons>
+<ion-content>
+  <div class="padding my-computer-view">
+    <ion-slide-box class="my-white-background" on-slide-changed="slideHasChanged($index)">
+      <ion-slide ng-repeat="sightType in sightTypeList">
+        <ion-list class="list list-inset">
+
+          <ion-item class="item item-text-wrap text-center my-no-padding-bottom item-balanced">
+            {{sightType.sight_type_name}}
+            <br/>
+            <span class="my-text-small">(tip:水平滑动切换景观类别)</span>
+          </ion-item>
+          <div>
+            <ion-item class="item item-icon-right"
+                      ng-repeat="sight in sightListNew"
+                      ng-if="(sight.sight_type_id==sightType.sight_type_id||sightType.sight_type_id==0)">
+              <a ng-click="doForward()" href="#/rootTab/sight/{{sight.sight_name}}"
+                        class="button button-stable button-icon my-button-small">
+                <img ng-src="http://localhost:8080/img/my_mark_{{sight.sight_type_id}}.png"/>
+                <span>{{sight.sight_name}}</span>
+              </a>
+              <div class="text-left my-top-margin item-text-wrap">
+                <button ng-show="!sight.isCollection"
+                        ng-click="toggleCollection(sight)"
+                        class="button button-positive my-button-small">
+                  <i class="ion-plus"></i>&nbsp收藏
+                </button>
+                <button ng-show="sight.isCollection"
+                        ng-click="toggleCollection(sight)"
+                        class="button button-assertive my-button-small">
+                  <i class="ion-minus"></i>&nbsp收藏
+                </button>
+                <button ng-show="!sight.isStep"
+                   ng-click="toggleStep(sight)"
+                   class="button button-positive my-button-small">
+                  <i class="ion-plus"></i>&nbsp足迹
+                </button>
+                <button ng-show="sight.isStep"
+                        ng-click="toggleStep(sight)"
+                        class="button button-assertive my-button-small">
+                  <i class="ion-minus"></i>&nbsp足迹
+                </button>
+                <button ng-show="!sight.isWish"
+                        ng-click="toggleWish(sight)"
+                        class="button button-positive my-button-small">
+                  <i class="ion-plus"></i>&nbsp心愿
+                </button>
+                <button ng-show="sight.isWish"
+                        ng-click="toggleWish(sight)"
+                        class="button button-assertive my-button-small">
+                  <i class="ion-minus"></i>&nbsp心愿
+                </button>
+                <div class="padding"></div>
+              </div>
+            </ion-item>
+
+          </div>
+        </ion-list>
+      </ion-slide>
+    </ion-slide-box>
+
+  </div>
+</ion-content>
+</ion-view>
