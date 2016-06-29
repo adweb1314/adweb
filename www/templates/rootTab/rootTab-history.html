@@ -4,12 +4,75 @@
     <a class="button icon ion-ios-home" href="#/rootTab/home"></a>
   </ion-nav-buttons>
   <ion-content>
+    <div class="padding my-computer-view">
 
-    <ion-list>
-      <ion-toggle  ng-model="setting">
-        搜索历史
-      </ion-toggle>
-    </ion-list>
+      <div class="item item-input-inset button-right">
+        <label class="item-input-wrapper">
+          <i class="icon ion-ios-search placeholder-icon"></i>
+          <input type="search" ng-model="filter" placeholder="搜索">
+        </label>
+        <button class="button button-positive my-button-small" ng-click="setFilter2(filter)">搜索</button>
+      </div>
+      <div class="padding">
+        <ion-item ng-show="filter==''" class="my-small-padding-up-bottom positive my-text-big">
+          搜索历史
+        </ion-item>
+        <div ng-repeat="history in historyList | orderBy:'-history_id'"
+             ng-if="history.history_content.indexOf(filter)>=0&&filter!=history.history_content"
+             class="item item-input-inset item-button-right my-gray-background">
+          {{history.history_content}}
+          <button ng-show="filter!=''" class="button button-stable my-text-small my-button-small my-minus-top-margin" ng-click="setFilter2(history.history_content)">搜索</button>
+        </div>
+      </div>
 
+      <ion-item class="my-small-padding-up-bottom positive my-text-big">
+        搜索结果
+      </ion-item>
+      <div class="item item-text-wrap my-small-padding-up-bottom">
+        <span class="my-button-small">排序：</span>
+        <span ng-if="sortType=='sortByGrade'" class="button button-positive my-button-small" ng-click="sortByGrade()">评分</span>
+        <span ng-if="sortType!='sortByGrade'" class="button my-button-positive-weak my-button-small" ng-click="sortByGrade()">评分</span>
+        <span ng-if="sortType=='sortByCollection'" class="button button-positive my-button-small" ng-click="sortByCollection()">收藏</span>
+        <span ng-if="sortType!='sortByCollection'" class="button my-button-positive-weak my-button-small" ng-click="sortByCollection()">收藏</span>
+        <span ng-if="sortType=='sortByStep'" class="button button-positive my-button-small" ng-click="sortByStep()">足迹</span>
+        <span ng-if="sortType!='sortByStep'" class="button my-button-positive-weak my-button-small" ng-click="sortByStep()">足迹</span>
+        <span ng-if="sortType=='sortByWish'" class="button button-positive my-button-small" ng-click="sortByWish()">心愿</span>
+        <span ng-if="sortType!='sortByWish'" class="button my-button-positive-weak my-button-small" ng-click="sortByWish()">心愿</span>
+      </div>
+
+      <ion-slide-box class="my-white-background" on-slide-changed="slideHasChanged($index)">
+        <ion-slide ng-repeat="sightType in sightTypeList">
+          <ion-list class="list list-inset">
+
+            <ion-item class="item item-text-wrap text-center my-no-padding-bottom item-positive">
+              {{sightType.sight_type_name}}
+              <br/>
+              <span class="my-text-small">(tip:水平滑动切换景观类别)</span>
+            </ion-item>
+
+            <ion-item class="item item-icon-right"
+                      ng-repeat="sight in sightList | orderBy:orderKey"
+                      ng-if="(sight.sight_type_id==sightType.sight_type_id||sightType.sight_type_id==0)
+                        &&sight.sight_name.indexOf(filter2)>=0"
+                      ng-click="doForward()"
+                      href="#/rootTab/sight/{{sight.sight_name}}">
+              <img ng-src="http://localhost:8080/img/my_mark_{{sight.sight_type_id}}.png"/>
+              <span>{{sight.sight_name}}</span>
+              <span class="my-text-small">
+                (&nbsp&nbsp{{text}}:
+                <span ng-show="sortType=='sortByGrade'">{{-sight.grade}}</span>
+                <span ng-show="sortType=='sortByCollection'">{{-sight.collectionNum}}</span>
+                <span ng-show="sortType=='sortByStep'">{{-sight.stepNum}}</span>
+                <span ng-show="sortType=='sortByWish'">{{-sight.wishNum}}</span>
+                )
+              </span>
+              <i class="icon ion-chevron-right icon-accessory"></i>
+            </ion-item>
+
+          </ion-list>
+        </ion-slide>
+      </ion-slide-box>
+
+    </div>
   </ion-content>
 </ion-view>

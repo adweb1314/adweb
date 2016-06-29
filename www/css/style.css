@@ -14,9 +14,17 @@ ion-content {
   background-color: white;
 }
 
+.my-gray-background {
+  background-color: #f8f8f8;
+}
+
 .my-computer-view {
   max-width: 500px;
   margin:0 auto;
+}
+
+.my-minus-top-margin {
+  margin-top: -0.25em;
 }
 
 .my-top-margin {
