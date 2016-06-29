@@ -7,11 +7,11 @@
     <div class="my-computer-view">
 
       <div class="padding text-center">
-        <img class="my-portrait" src="img/bubbles-alt-icon.png"/>
+        <img class="my-portrait" ng-src="avatar/{{pic}}"/>
       </div>
 
       <div class="text-center">
-        <p>用户的Name(用户的ID)</p> <!--需要后台提供获取用户名和头像的借口-->
+        <span ng-model="name">{{name}}</span><span ng-model="user_id">({{user_id}})</span> <!--需要后台提供获取用户名和头像的借口-->
       </div>
 
       <ion-item class="item-icon-right my-small-padding-up-bottom" ng-click="changeInfo()">

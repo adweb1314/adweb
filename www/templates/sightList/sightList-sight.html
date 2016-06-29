@@ -122,6 +122,10 @@
         <div class="padding">
         </div>
         <div class="text-center">
+          <button ng-click="share(sight_name)"
+                  class="button button-calm my-button-small">
+            &nbsp分享
+          </button>
           <button ng-show="!isCollection"
                   ng-click="toggleCollection()"
                   class="button button-positive my-button-small">
@@ -131,10 +135,6 @@
                   ng-click="toggleCollection()"
                   class="button button-assertive my-button-small">
             <i class="ion-minus"></i>&nbsp收藏
-          </button>
-          <button ng-click="alert('待实现');"
-                  class="button button-positive my-button-small">
-            <i class="ion-plus"></i>&nbsp分享
           </button>
           <a ng-show="!isStep"
              ng-click="toggleStep()"

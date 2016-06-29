@@ -2,7 +2,6 @@ angular.module('app.sightListControllers',[])
 
   //rootTab-sightList控制
   .controller('SightListCtrl', function($scope,$rootScope,$ionicHistory,$http) {
-
     //前进时禁止回退
     $scope.doForward=function(){
       $ionicHistory.nextViewOptions({
@@ -136,7 +135,42 @@ angular.module('app.sightListControllers',[])
 
   //单个景观页面控制
   .controller('SightCtrl', function($scope,$rootScope,$stateParams,$ionicHistory,$ionicPopover,$ionicPopup,$http) {
+    $scope.share=function(sight){
+      $ionicPopup.prompt({
+        title: '分享',
+        template: '你要分享给谁：',
+        inputType: 'text',
+        inputPlaceholder: '请输入对方id'
+      }).then(function(res)
+      {
+        if(res === undefined || res === "")
+          return;
+        $http.get("http://localhost:8080/user/name/"+res)
+          .success(function(ret){
+              if(ret.user_name === "null") {
+                $ionicPopup.alert({
+                  title: '系统提示',
+                  template: '该用户不存在'
+                });
+              }
+              else
+                $http.get("http://localhost:8080/share/add/"+$rootScope.user_id+"/"+ sight +"/"+res)
+                  .success(function(ret){
+                    $ionicPopup.alert({
+                      title: '系统提示',
+                      template: '分享成功'
+                    });
+                });
+            })
+            .error(function() {
+              $ionicPopup.alert({
+                title: '系统提示',
+                template: '无法得到用户信息'
+              });
+            });
 
+      });
+    };
     //url参数传递
     $scope.sight_name=$stateParams.sight_name;
 

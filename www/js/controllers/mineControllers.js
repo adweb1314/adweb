@@ -1,6 +1,15 @@
 angular.module('app.mineControllers',[])
 
-  .controller('MineCtrl', function($scope,$rootScope,$ionicPopup,$state,$ionicPopover) {
+  .controller('MineCtrl', function($scope,$rootScope,$ionicPopup,$state,$ionicPopover,$http) {
+    $scope.user_id = $rootScope.user_id;
+    $http.get("http://localhost:8080/user/name/"+$rootScope.user_id)
+      .success(function(ret) {
+        $scope.name = ret.user_name;
+      });
+    $http.get("http://localhost:8080/user/pic/"+$rootScope.user_id)
+      .success(function(ret) {
+        $scope.pic = ret.user_pic;
+      });
 
     $scope.logout=function(){
       $ionicPopup.confirm({
@@ -306,13 +315,13 @@ angular.module('app.mineControllers',[])
     $http.get("http://localhost:8080/share/"+$rootScope.user_id)
         .success(function(ret){
           $scope.shareList = ret;
+          $http.get("http://localhost:8080/share/tome/"+$rootScope.user_id)
+            .success(function(ret){
+              for (var i = 0; i < ret.length; i++) {
+                $scope.shareList.push(ret[i]);
+              }
+            });
      });
-    $http.get("http://localhost:8080/share/tome/"+$rootScope.user_id)
-    .success(function(ret){
-      for (var i = 0; i < ret.length; i++) {
-        $scope.shareList.push(ret[i]);
-      }
-    });
     $scope.user_id = $rootScope.user_id;
   /*菜单栏的固定格式*/{
     // .fromTemplateUrl() 方法
