@@ -61,6 +61,11 @@ angular.module('app.mineControllers',[])
   })
   .controller('ChangeInfoCtrl', function($scope,$rootScope,$ionicPopup,$state,$ionicPopover,$http) {
 
+    $http.get("http://localhost:8080/user/name/"+$rootScope.user_id)
+      .success(function(ret) {
+        $scope.name = ret.user_name;
+      });
+
     $scope.changeInfo=function(user_name,user_avatar){
       $http.get("http://localhost:8080/user/updateNameAndPic/"+$rootScope.user_id+"/"+user_name+"/"+user_avatar)
         .success(function(ret){
@@ -88,7 +93,7 @@ angular.module('app.mineControllers',[])
           });
           $state.go("rootTab.mine");
         });
-    }
+    };
 
     /*菜单栏的固定格式*/{
       // .fromTemplateUrl() 方法

@@ -11,13 +11,13 @@
       </div>
 
       <label class="item item-input item-floating-label my-white-background my-top-margin">
-        <span class="input-label">昵称：</span>
-        <input type="text" placeholder="昵称" ng-model="user_name"/>
+        <span class="input-label">新昵称：</span>
+        <input type="text" placeholder="新昵称" ng-model="name"/>
       </label>
 
       <div class="padding my-top-margin">
         <button ng-show="true"
-                class="button button-block button-positive" ng-click="changeInfo(user_name, user_avatar)">修改</button>
+                class="button button-block button-positive" ng-click="changeInfo(name, user_avatar)">修改</button>
         <div ng-show="!(true) " class="item item-text-wrap text-center">
           请正确、完整填写信息
         </div>
