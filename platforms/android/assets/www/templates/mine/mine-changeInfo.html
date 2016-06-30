@@ -1,0 +1,32 @@
+<ion-view view-title="修改信息">
+  <ion-nav-buttons side="right">
+    <button class="button icon ion-android-menu" ng-click="openPopover($event)"></button>
+    <a class="button icon ion-ios-home" href="#/rootTab/home"></a>
+  </ion-nav-buttons>
+  <ion-content>
+    <div class="padding my-computer-view">
+
+      <div class="padding my-top-margin text-center">
+        <img class="my-portrait" ng-src="http://localhost:8080/{{pic.replace('I','.')}}" ng-click="show()"> <!-上传头像-->
+      </div>
+
+      <div class="text-center">
+        点击头像打开头像上传菜单
+      </div>
+
+      <label class="item item-input item-floating-label my-white-background my-top-margin">
+        <span class="input-label">新昵称：</span>
+        <input type="text" placeholder="新昵称" ng-model="name"/>
+      </label>
+
+      <div class="padding my-top-margin">
+        <button class="button button-block button-positive" ng-click="changeInfo(name, avatar)">保存修改</button>
+      </div>
+
+      <form id="iconForm" class="my-hide" enctype="multipart/form-data" name="iconForm">
+        <input id="picture" class="my-hide" name="picture" type="file" />
+      </form>
+
+    </div>
+  </ion-content>
+</ion-view>

@@ -1,0 +1,244 @@
+<ion-view view-title="{{sight_name}}">
+  <ion-nav-buttons side="left">
+    <a class="button" ng-click="doBack()" href="#/rootTab/sightList">
+      <i class="icon ion-ios-arrow-back"></i>
+      返回景观列表
+    </a>
+  </ion-nav-buttons>
+  <ion-nav-buttons side="right">
+    <!--<button class="button icon ion-android-menu" ng-click="openPopover($event)"></button>-->
+    <a class="button icon ion-ios-home" href="#/rootTab/home"></a>
+  </ion-nav-buttons>
+  <ion-content>
+    <div class="padding my-computer-view">
+
+      <ion-item class="my-small-padding-up-bottom positive my-text-big">
+        位置信息
+      </ion-item>
+      <div class="item my-map-wrapper-small">
+        <!--<baidu-map id="baidu-map" options="mapOptions" ak="7EZoSoWRPRCTaK36Q7vgSGVN506t6WM9" offline="offlineOpts" on-map-loaded="loadMap(map)"></baidu-map>-->
+        <div id="container"></div>
+      </div>
+      <ion-item class="my-small-padding-up-bottom">
+        <a class="button button-block button-positive"
+           ng-click="goRoute()"
+           href="#/rootTab/route">
+          <i class="icon ion-ios-navigate"></i>
+          路线规划：到这里去
+        </a>
+      </ion-item>
+
+      <ion-list class="padding">
+      </ion-list>
+
+      <ion-item class="my-small-padding-up-bottom positive my-text-big">
+        景观资料
+      </ion-item>
+      <ion-item class="item-text-wrap">
+        &nbsp&nbsp&nbsp&nbsp{{sight.sight_description}}
+      </ion-item>
+      <ion-item class="my-small-padding-up-bottom">
+        <a class="button button-block button-positive"
+           ng-click="doForward()"
+           href="#/rootTab/sight-detail/{{sight_name}}">
+          查看详细资料
+        </a>
+      </ion-item>
+
+      <ion-list class="padding">
+      </ion-list>
+
+      <ion-item class="my-small-padding-up-bottom positive my-text-big">
+        用户评论
+      </ion-item>
+
+      <ion-item ng-show="!expand" class="item item-image" ng-click="doExpand()">
+        <span class="icon ion-ios-arrow-down"></span>
+        查看评分详细信息
+      </ion-item>
+      <ion-item ng-show="expand" class="item item-image" ng-click="cancelExpand()">
+        <span class="icon ion-ios-arrow-up"></span>
+        收起评分详细信息
+      </ion-item>
+
+      <ion-item>
+        <div>
+          <img src="img/star-on-big.png" ng-if="-sight.grade>=1"/>
+          <img src="img/star-on-big.png" ng-if="-sight.grade>=2"/>
+          <img src="img/star-on-big.png" ng-if="-sight.grade>=3"/>
+          <img src="img/star-on-big.png" ng-if="-sight.grade>=4"/>
+          <img src="img/star-on-big.png" ng-if="-sight.grade>=5"/>
+          <img src="img/star-off-big.png" ng-if="-sight.grade<5"/>
+          <img src="img/star-off-big.png" ng-if="-sight.grade<4"/>
+          <img src="img/star-off-big.png" ng-if="-sight.grade<3"/>
+          <img src="img/star-off-big.png" ng-if="-sight.grade<2"/>
+          <img src="img/star-off-big.png" ng-if="-sight.grade<1"/>
+          <span class="my-float-right">{{-sight.grade}}分&nbsp({{sight.gradeNum[0]}}个人评分)</span>
+        </div>
+        <div ng-show="expand">
+          <div class="padding">
+          </div>
+          <div>
+            <img src="img/star-on-big.png"/>
+            <img src="img/star-off-big.png"/>
+            <img src="img/star-off-big.png"/>
+            <img src="img/star-off-big.png"/>
+            <img src="img/star-off-big.png"/>
+            ({{sight.gradeNum[1]}}个人)
+          </div>
+          <div>
+            <img src="img/star-on-big.png"/>
+            <img src="img/star-on-big.png"/>
+            <img src="img/star-off-big.png"/>
+            <img src="img/star-off-big.png"/>
+            <img src="img/star-off-big.png"/>
+            ({{sight.gradeNum[2]}}个人)
+          </div>
+          <div>
+            <img src="img/star-on-big.png"/>
+            <img src="img/star-on-big.png"/>
+            <img src="img/star-on-big.png"/>
+            <img src="img/star-off-big.png"/>
+            <img src="img/star-off-big.png"/>
+            ({{sight.gradeNum[3]}}个人)
+          </div>
+          <div>
+            <img src="img/star-on-big.png"/>
+            <img src="img/star-on-big.png"/>
+            <img src="img/star-on-big.png"/>
+            <img src="img/star-on-big.png"/>
+            <img src="img/star-off-big.png"/>
+            ({{sight.gradeNum[4]}}个人)
+          </div>
+          <div>
+            <img src="img/star-on-big.png"/>
+            <img src="img/star-on-big.png"/>
+            <img src="img/star-on-big.png"/>
+            <img src="img/star-on-big.png"/>
+            <img src="img/star-on-big.png"/>
+            ({{sight.gradeNum[5]}}个人)
+          </div>
+        </div>
+        <div class="padding">
+        </div>
+        <div class="text-center">
+          <button ng-click="share(sight_name)"
+                  class="button button-calm my-button-small">
+            分享
+          </button>
+          <button ng-show="!isCollection"
+                  ng-click="toggleCollection()"
+                  class="button button-positive my-button-small">
+            <i class="ion-plus"></i>&nbsp收藏
+          </button>
+          <button ng-show="isCollection"
+                  ng-click="toggleCollection()"
+                  class="button button-assertive my-button-small">
+            <i class="ion-minus"></i>&nbsp收藏
+          </button>
+          <a ng-show="!isStep"
+             ng-click="toggleStep()"
+             href="#/rootTab/sight-detail/{{sight_name}}"
+             class="button button-positive my-button-small">
+            <i class="ion-plus"></i>&nbsp足迹
+          </a>
+          <button ng-show="isStep"
+                  ng-click="toggleStep()"
+                  class="button button-assertive my-button-small">
+            <i class="ion-minus"></i>&nbsp足迹
+          </button>
+          <button ng-show="!isWish"
+                  ng-click="toggleWish()"
+                  class="button button-positive my-button-small">
+            <i class="ion-plus"></i>&nbsp心愿
+          </button>
+          <button ng-show="isWish"
+                  ng-click="toggleWish()"
+                  class="button button-assertive my-button-small">
+            <i class="ion-minus"></i>&nbsp心愿
+          </button>
+        </div>
+      </ion-item>
+
+      <ion-item ng-show="!expand2" class="item item-image" ng-click="doExpand2()">
+        <span class="icon ion-ios-arrow-down"></span>
+        我要评论
+      </ion-item>
+      <ion-item ng-show="expand2" class="item item-image" ng-click="cancelExpand2()">
+        <span class="icon ion-ios-arrow-up"></span>
+        收起评论
+      </ion-item>
+      <ion-item ng-show="expand2" class="item-text-wrap">
+        <div class="text-left">
+          <span>评分：</span>
+          <select ng-model="selectedGrade" ng-options="d for d in [1,2,3,4,5]"></select>
+          <img src="img/star-on-big.png" ng-if="selectedGrade>=1"/>
+          <img src="img/star-on-big.png" ng-if="selectedGrade>=2"/>
+          <img src="img/star-on-big.png" ng-if="selectedGrade>=3"/>
+          <img src="img/star-on-big.png" ng-if="selectedGrade>=4"/>
+          <img src="img/star-on-big.png" ng-if="selectedGrade>=5"/>
+          <img src="img/star-off-big.png" ng-if="selectedGrade<5"/>
+          <img src="img/star-off-big.png" ng-if="selectedGrade<4"/>
+          <img src="img/star-off-big.png" ng-if="selectedGrade<3"/>
+          <img src="img/star-off-big.png" ng-if="selectedGrade<2"/>
+          <img src="img/star-off-big.png" ng-if="selectedGrade<1"/>
+        </div>
+        <textarea rows='5' class="my-textarea padding my-top-margin my-bottom-margin" ng-model="newComment" placeholder='请在此输入评论'></textarea>
+        <div class="text-right">
+          <button ng-show="selectedGrade==null||newComment==null||newComment==''"
+                  class="button button-stable my-button-small">
+            提交
+          </button>
+          <button ng-click="addComment(selectedGrade,newComment)"
+             ng-show="selectedGrade!=null&&newComment!=null&&newComment!=''"
+             class="button button-positive my-button-small">
+            提交
+          </button>
+        </div>
+      </ion-item>
+
+      <ion-item ng-show="sightCommentList==null||sightCommentList.length==0">
+        <h2>(该景观暂无评论)</h2>
+      </ion-item>
+      <ion-item ng-show="sightCommentList!=null&&sightCommentList.length!=0" class="my-small-padding-up-bottom">
+        <ion-slide-box class="my-slider-comment my-white-background" on-slide-changed="slideHasChanged($index)">
+          <ion-slide ng-repeat="sightComment in sightCommentList">
+            <div class="padding">
+              <div>
+              <h2>{{sightComment.user_id}}的评论：</h2>
+            </div>
+              <div>
+                <img src="img/star-on-big.png" ng-if="sightComment.grade>=1"/>
+                <img src="img/star-on-big.png" ng-if="sightComment.grade>=2"/>
+                <img src="img/star-on-big.png" ng-if="sightComment.grade>=3"/>
+                <img src="img/star-on-big.png" ng-if="sightComment.grade>=4"/>
+                <img src="img/star-on-big.png" ng-if="sightComment.grade>=5"/>
+                <img src="img/star-off-big.png" ng-if="sightComment.grade<=4"/>
+                <img src="img/star-off-big.png" ng-if="sightComment.grade<=3"/>
+                <img src="img/star-off-big.png" ng-if="sightComment.grade<=2"/>
+                <img src="img/star-off-big.png" ng-if="sightComment.grade<=1"/>
+              </div>
+              <div class="item-text-wrap">
+                &nbsp&nbsp&nbsp&nbsp{{sightComment.comment}}
+              </div>
+            </div>
+          </ion-slide>
+        </ion-slide-box>
+      </ion-item>
+
+      <ion-item ng-show="sightCommentList!=null&&sightCommentList.length!=0" class="my-small-padding-up-bottom">
+        <a class="button button-block button-positive"
+           ng-click="doForward()"
+           href="#/rootTab/sight-comment/{{sight_name}}">
+          查看全部评论
+        </a>
+        <!--<a class="button button-block button-positive"-->
+           <!--ng-click="doForward()"-->
+           <!--href="#/rootTab/sight-value/{{sight_name}}">-->
+          <!--评价信息-->
+        <!--</a>-->
+      </ion-item>
+
+    </div>
+  </ion-content>
+</ion-view>

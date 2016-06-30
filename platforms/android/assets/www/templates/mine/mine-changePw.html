@@ -1,0 +1,40 @@
+<ion-view view-title="密码修改">
+  <ion-nav-buttons side="right">
+    <button class="button icon ion-android-menu" ng-click="openPopover($event)"></button>
+    <a class="button icon ion-ios-home" href="#/rootTab/home"></a>
+  </ion-nav-buttons>
+  <ion-content>
+    <div class="padding my-computer-view">
+
+      <label class="item item-input item-floating-label my-white-background my-top-margin">
+        <span class="input-label">旧密码：</span>
+        <input type="password" placeholder="旧密码" ng-model="user_old_password"/>
+      </label>
+
+      <label class="item item-input item-floating-label my-white-background">
+        <span class="input-label">新密码：</span>
+        <input type="password" placeholder="新密码" ng-model="user_password"/>
+      </label>
+
+      <label class="item item-input item-floating-label my-white-background">
+        <span class="input-label">
+          确认密码：
+          <span ng-show="user_password!=null&&user_password!=''&&user_password_confirm!=null&&user_password_confirm!=''
+          &&user_password!=user_password_confirm" class="my-red">(错误：必须与密码一致)</span>
+        </span>
+        <input type="password" placeholder="确认密码(必须与新密码一致)" ng-model="user_password_confirm"/>
+      </label>
+
+      <div class="padding my-top-margin">
+        <button ng-show="user_password!=null&&user_password!=''&&user_password_confirm!=null
+        &&user_password_confirm!=''&&user_password==user_password_confirm"
+                class="button button-block button-positive" ng-click="changePw(user_old_password,user_password)">修改</button>
+        <div ng-show="!(user_password!=null&&user_password!=''&&user_password_confirm!=null
+        &&user_password_confirm!=''&&user_password==user_password_confirm)" class="item item-text-wrap text-center">
+          请正确、完整填写信息
+        </div>
+      </div>
+
+    </div>
+  </ion-content>
+</ion-view>

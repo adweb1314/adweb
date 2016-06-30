@@ -1,0 +1,53 @@
+<ion-view view-title="路线规划">
+  <ion-nav-buttons side="right">
+    <button class="button icon ion-android-menu" ng-click="openPopover($event)"></button>
+    <a class="button icon ion-ios-home" href="#/rootTab/home"></a>
+  </ion-nav-buttons>
+  <ion-content>
+    <div class="padding my-computer-view">
+
+      <ion-item ng-show="!expand" class="item item-image" ng-click="doExpand()">
+        <span class="icon ion-ios-arrow-down"></span>
+        寻路菜单
+      </ion-item>
+      <ion-item ng-show="expand" class="item item-image" ng-click="cancelExpand()">
+        <span class="icon ion-ios-arrow-up"></span>
+        收起菜单
+      </ion-item>
+
+      <label ng-show="expand" class="item-input my-white-background">
+        <span class="input-label">出发地：</span>
+        <input type="text" placeholder="当前位置（默认）" ng-model="start.name"/>
+      </label>
+      <label ng-show="expand" class="item-input my-white-background">
+        <span class="input-label">目的地：</span>
+        <input type="text" placeholder="请输入目的地"ng-model="dest.name"/>
+      </label>
+      <div ng-show="expand" class="padding my-white-background">
+        <button class="button button-positive button-block" ng-click="goRoute()">
+          开始寻路
+        </button>
+      </div>
+
+      <div class="item my-map-wrapper">
+        <!--<baidu-map id="baidu-map" options="mapOptions" ak="7EZoSoWRPRCTaK36Q7vgSGVN506t6WM9" offline="offlineOpts" on-map-loaded="loadMap(map)"></baidu-map>-->
+        <div id="container"></div>
+      </div>
+
+      <div ng-show="expand" class="item item-text-wrap my-small-padding-up-bottom">
+        图层选择：
+      </div>
+
+      <ion-checkbox ng-show="expand&&item.id!=0"
+                    ng-click="layer(item)"
+                    ng-repeat="item in devList"
+                    ng-model="item.checked"
+                    ng-checked="item.checked"
+                    class="item item-text-wrap my-small-padding-up-bottom">
+        <img ng-src="http://localhost:8080/img/my_mark_{{item.id}}.png"/>
+        {{ item.text }}
+      </ion-checkbox>
+
+    </div>
+  </ion-content>
+</ion-view>

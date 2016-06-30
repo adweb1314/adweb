@@ -1,0 +1,162 @@
+* {
+  font-family: "Microsoft YaHei UI Light";
+}
+
+button {
+  font-family: "Microsoft YaHei UI Light";
+}
+
+ion-content {
+  background-color: #f0f0f0;
+}
+
+.my-white-background {
+  background-color: white;
+}
+
+.my-gray-background {
+  background-color: #f8f8f8;
+}
+
+.my-computer-view {
+  max-width: 500px;
+  margin:0 auto;
+}
+
+.my-minus-top-margin {
+  margin-top: -0.25em;
+}
+
+.my-top-margin {
+  margin-top: 10px;
+}
+
+.my-bottom-margin {
+  margin-bottom: 10px;
+}
+
+.my-no-margin {
+  margin:0;
+}
+
+.my-red {
+  color: red;
+}
+
+.my-hidden {
+  visibility: hidden;
+  margin-right: -10%;
+}
+
+.my-hide{
+  display:none;
+}
+
+.my-textarea {
+  resize: none;
+  width: 100%;
+  background-color: aliceblue;
+}
+
+.my-no-padding {
+  padding: 0;
+}
+
+.my-small-padding-up-bottom {
+  padding-top: 0.4em;
+  padding-bottom: 0.4em;
+}
+
+.my-no-padding-bottom{
+  padding-bottom: 0;
+}
+
+.my-button-small {
+  line-height: 1.8em;
+  padding-left: 0.4em;
+  padding-right: 0.4em;
+  min-height: 0;
+  min-width: 0;
+}
+
+.my-button-balanced-weak {
+  color: white;
+  background-color: #80f080;
+}
+
+.my-button-positive-weak {
+  color: white;
+  background-color: #b0b0ff;
+}
+
+.my-map-wrapper {
+  height: 400px;
+}
+
+.my-map-wrapper-middle {
+  height: 300px;
+}
+
+.my-map-wrapper-small {
+  height: 200px;
+}
+
+#pover-navi {
+  height: 19em;
+  width: 130px;
+}
+
+#pover-sightList {
+  height: 424px;
+  width: 310px;
+}
+
+.slider {
+  /*height: 400px;*/
+}
+
+.my-slider-comment {
+  height: 200px;
+}
+
+.my-text-small {
+  font-size: 10pt;
+}
+
+.my-text-big {
+  font-size: 14pt;
+  font-weight: bold;
+}
+
+.my-table-full-width {
+  width: 100%;
+}
+
+.my-cell-long {
+  width: 50%;
+  height: 1.9em;
+}
+
+.my-cell-short {
+  width: 25%;
+  height: 1.9em;
+}
+
+.my-float-right {
+  float: right;
+}
+
+.my-portrait {
+  background-color: white;
+  border-radius: 50%;
+  height: 80px;
+  width: 80px;
+}
+
+.my-square{
+  border-radius: 3px;
+  width: 95px;
+  height: 95px;
+  padding: 5px;
+  margin: 5px;
+}

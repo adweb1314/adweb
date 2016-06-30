@@ -1,0 +1,107 @@
+<ion-view view-title="详细资料">
+  <ion-nav-buttons side="right">
+    <button class="button icon ion-android-menu" ng-click="openPopover($event)"></button>
+    <a class="button icon ion-ios-home" href="#/rootTab/home"></a>
+  </ion-nav-buttons>
+  <ion-content>
+    <div class="padding my-computer-view">
+
+      <ion-item class="my-small-padding-up-bottom positive my-text-big">
+        基本信息
+      </ion-item>
+      <ion-item class="item-text-wrap">
+        &nbsp&nbsp&nbsp&nbsp{{sight.sight_description}}
+      </ion-item>
+
+      <ion-list class="padding">
+      </ion-list>
+
+      <ion-item class="my-small-padding-up-bottom positive my-text-big">
+        图片库
+      </ion-item>
+      <ion-item class="item-text-wrap">
+        <!--<img ng-if="i.resource_type==0"-->
+        <img ng-repeat="i in res"
+             ng-src="http://localhost:8080/{{i.resource_id.replace('I','.')}}"
+             class="my-square my-gray-background"/>
+        <!--<video ng-if="i.resource_type!=0"-->
+               <!--ng-repeat="i in res"-->
+               <!--ng-src="http://localhost:8080/{{i.resource_id.replace('I','.')}}"-->
+               <!--controls="controls"-->
+               <!--class="my-square my-gray-background">-->
+          <!--your browser does not support the video tag-->
+        <!--</video>-->
+        <img class="my-square my-gray-background" src="img/plus.png" ng-click="show()"/>
+        <form id="fileForm" class="my-hide" enctype="multipart/form-data" name="fileForm">
+          <input id="file" class="my-hide" name="file" type="file" />
+        </form>
+      </ion-item>
+
+      <ion-list class="padding">
+      </ion-list>
+
+      <ion-item class="my-small-padding-up-bottom positive my-text-big">
+        详细信息
+      </ion-item>
+      <ion-item class="item-text-wrap">
+        &nbsp&nbsp&nbsp&nbsp{{sight.sight_detail}}
+      </ion-item>
+      <ion-item class="text-center">
+        <div class="text-center">
+          <button ng-click="share(sight.sight_name)"
+                  class="button button-calm my-button-small">
+            分享
+          </button>
+          <button ng-show="!isCollection"
+                  ng-click="toggleCollection()"
+                  class="button button-positive my-button-small">
+            <i class="ion-plus"></i>&nbsp收藏
+          </button>
+          <button ng-show="isCollection"
+                  ng-click="toggleCollection()"
+                  class="button button-assertive my-button-small">
+            <i class="ion-minus"></i>&nbsp收藏
+          </button>
+          <a ng-show="!isStep"
+             ng-click="toggleStep()"
+             href="#/rootTab/sight-detail/{{sight_name}}"
+             class="button button-positive my-button-small">
+            <i class="ion-plus"></i>&nbsp足迹
+          </a>
+          <button ng-show="isStep"
+                  ng-click="toggleStep()"
+                  class="button button-assertive my-button-small">
+            <i class="ion-minus"></i>&nbsp足迹
+          </button>
+          <button ng-show="!isWish"
+                  ng-click="toggleWish()"
+                  class="button button-positive my-button-small">
+            <i class="ion-plus"></i>&nbsp心愿
+          </button>
+          <button ng-show="isWish"
+                  ng-click="toggleWish()"
+                  class="button button-assertive my-button-small">
+            <i class="ion-minus"></i>&nbsp心愿
+          </button>
+        </div>
+        <div class="padding">
+        </div>
+        <div>
+          <button ng-click="baocuo()" class="button button-assertive my-button-small">&nbsp&nbsp报错&nbsp&nbsp</button>
+        </div>
+      </ion-item>
+
+      <ion-item class="my-small-padding-up-bottom">
+        <a class="button button-block button-positive"
+           href="#/rootTab/sight-value/{{sight_name}}">
+          详细评价
+        </a>
+        <a class="button button-block button-positive"
+           href="#/rootTab/sight-survey/{{sight_name}}">
+          调查问卷
+        </a>
+      </ion-item>
+
+    </div>
+  </ion-content>
+</ion-view>

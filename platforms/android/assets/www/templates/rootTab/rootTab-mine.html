@@ -1,0 +1,45 @@
+<ion-view view-title="我的账号">
+  <ion-nav-buttons side="right">
+    <button class="button icon ion-android-menu" ng-click="openPopover($event)"></button>
+    <a class="button icon ion-ios-home" href="#/rootTab/home"></a>
+  </ion-nav-buttons>
+  <ion-content>
+    <div class="my-computer-view">
+
+      <div class="padding text-center">
+        <img class="my-portrait" ng-src="http://localhost:8080/{{pic.replace('I','.')}}"/>
+      </div>
+
+      <div class="text-center">
+        <span ng-model="name">{{name}}</span><span ng-model="user_id">&nbsp&nbsp(用户ID:{{user_id}})</span> <!--需要后台提供获取用户名和头像的借口-->
+      </div>
+
+      <div class="padding"></div>
+
+      <ion-item class="item-icon-right" ng-click="changeInfo()">
+        修改信息
+        <i class="icon ion-chevron-right icon-accessory"></i>
+      </ion-item>
+      <ion-item class="item-icon-right" ng-click="changePw()">
+        修改密码
+        <i class="icon ion-chevron-right icon-accessory"></i>
+      </ion-item>
+
+      <div class="padding"></div>
+
+      <ion-item class="item-icon-right" ng-click="collection()">
+        收藏、足迹与心愿单
+        <i class="icon ion-chevron-right icon-accessory"></i>
+      </ion-item>
+      <ion-item class="item-icon-right" ng-click="share()">
+        分享
+        <i class="icon ion-chevron-right icon-accessory"></i>
+      </ion-item>
+
+      <div class="padding my-top-margin">
+        <button class="button button-block button-assertive" ng-click="logout()">退出登录</button>
+      </div>
+
+    </div>
+  </ion-content>
+</ion-view>
