@@ -1,7 +1,9 @@
 angular.module('app.sightDetailControllers',[])
 
   //详细资料页面控制
-  .controller('SightDetailCtrl', function($scope,$rootScope,$stateParams,$ionicPopup,$ionicPopover,$http) {
+  .controller('SightDetailCtrl', function($scope,$rootScope,$stateParams,$ionicPopup,$ionicPopover,$ionicActionSheet,$http) {
+
+    //分享功能
     $scope.share=function(sight){
       $ionicPopup.prompt({
         title: '分享',
@@ -38,6 +40,7 @@ angular.module('app.sightDetailControllers',[])
 
       });
     };
+
     //url参数传递
     $scope.sight_name=$stateParams.sight_name;
 
@@ -138,6 +141,77 @@ angular.module('app.sightDetailControllers',[])
           }
         ]
       })
+    };
+
+    //上传文件菜单
+    $scope.show = function() {
+      $ionicActionSheet.show({
+        buttons: [
+          { text: '选择文件' },
+          { text: '上传文件' }
+        ],
+        cancelText: 'Cancel',
+        buttonClicked: function(index) {
+          switch(index){
+            case 0: $('#file').click();return false;
+            case 1: $scope.fileUpload();
+              return true;
+          }
+        }
+      });
+    };
+
+    //取得所有资源
+    var getAll=function(){
+      $http.get("http://localhost:8080/resource/"+$scope.sight_name).success(function(ret){
+        $scope.res=ret;
+      });
+    };
+    getAll();
+
+    //上传头像
+    $scope.fileUpload = function () {
+      var s="http://localhost:8080/publicUpload";
+      var formData = new FormData($('#fileForm')[0]);
+      $.ajax({
+        url: s,  //Server script to process data
+        type: 'POST',
+        data: formData,
+        cache: false,
+        contentType: false,
+        processData: false,
+        success: function(ret){
+          if (ret!=null&&ret!=""){
+            ret=ret.replace('.','I');
+            var type="0";
+            if (ret.toLowerCase().indexOf("mp4")>=0||
+              ret.toLowerCase().indexOf("webm")>=0||
+              ret.toLowerCase().indexOf("ogg")>=0||
+              ret.toLowerCase().indexOf("mpeg")>=0){
+              type="1";
+            }
+            $http.get("http://localhost:8080/resource/"+ret+"/"+$scope.sight_name+"/"+type).success(function(ret){
+              if (ret.flag==1){
+                getAll();
+                $ionicPopup.alert({
+                  title: '系统提示',
+                  template: '文件上传成功'
+                });
+              }else{
+                $ionicPopup.alert({
+                  title: '系统提示',
+                  template: '文件上传失败'
+                });
+              }
+            });
+          }else{
+            $ionicPopup.alert({
+              title: '系统提示',
+              template: '文件上传失败'
+            });
+          }
+        }
+      });
     };
 
     /*菜单栏的固定格式*/{

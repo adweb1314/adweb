@@ -7,7 +7,11 @@
     <div class="padding my-computer-view">
 
       <div class="padding my-top-margin text-center">
-        <img class="my-portrait" ng-src="img/bubbles-alt-icon.png" ng-click=""> <!-上传头像-->
+        <img class="my-portrait" ng-src="http://localhost:8080/{{pic.replace('I','.')}}" ng-click="show()"> <!-上传头像-->
+      </div>
+
+      <div class="text-center">
+        点击头像打开头像上传菜单
       </div>
 
       <label class="item item-input item-floating-label my-white-background my-top-margin">
@@ -16,12 +20,12 @@
       </label>
 
       <div class="padding my-top-margin">
-        <button ng-show="true"
-                class="button button-block button-positive" ng-click="changeInfo(name, user_avatar)">修改</button>
-        <div ng-show="!(true) " class="item item-text-wrap text-center">
-          请正确、完整填写信息
-        </div>
+        <button class="button button-block button-positive" ng-click="changeInfo(name, avatar)">保存修改</button>
       </div>
+
+      <form id="iconForm" class="my-hide" enctype="multipart/form-data" name="iconForm">
+        <input id="picture" class="my-hide" name="picture" type="file" />
+      </form>
 
     </div>
   </ion-content>

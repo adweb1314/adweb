@@ -57,28 +57,32 @@ angular.module('app.mineControllers',[])
         $scope.popover.remove();
       });
     }
-
   })
-  .controller('ChangeInfoCtrl', function($scope,$rootScope,$ionicPopup,$state,$ionicPopover,$http) {
+
+  .controller('ChangeInfoCtrl', function($scope,$rootScope,$ionicPopup,$state,$ionicPopover,$ionicActionSheet,$http) {
 
     $http.get("http://localhost:8080/user/name/"+$rootScope.user_id)
       .success(function(ret) {
         $scope.name = ret.user_name;
       });
 
-    $scope.changeInfo=function(user_name,user_avatar){
-      $http.get("http://localhost:8080/user/updateNameAndPic/"+$rootScope.user_id+"/"+user_name+"/"+user_avatar)
-        .success(function(ret){
-          if(ret.flag === 1)
-          {
+    $http.get("http://localhost:8080/user/pic/"+$rootScope.user_id)
+      .success(function(ret) {
+        $scope.pic = ret.user_pic;
+        $scope.avatar=$scope.pic;
+      });
+
+    $scope.changeInfo=function(user_name,user_avatar) {
+      $http.get("http://localhost:8080/user/updateNameAndPic/" + $rootScope.user_id + "/" + user_name + "/" + user_avatar)
+        .success(function (ret) {
+          if (ret.flag === 1) {
             $ionicPopup.alert({
               title: '系统提示',
               template: '修改成功'
             });
             $state.go("rootTab.mine");
           }
-          else
-          {
+          else {
             $ionicPopup.alert({
               title: '系统提示',
               template: '修改失败'
@@ -86,13 +90,63 @@ angular.module('app.mineControllers',[])
             $state.go("rootTab.mine");
           }
         })
-        .error(function(){
+        .error(function () {
           $ionicPopup.alert({
             title: '系统提示',
             template: '操作失败，无法连接到服务器'
           });
           $state.go("rootTab.mine");
         });
+    };
+
+    //上传头像菜单
+    $scope.show = function() {
+      $ionicActionSheet.show({
+        buttons: [
+          { text: '选择头像' },
+          { text: '上传头像' }
+        ],
+        cancelText: 'Cancel',
+        cancel: function() {
+          $state.go('rootTab.mine-changeInfo', {isCache:false});
+        },
+        buttonClicked: function(index) {
+          switch(index){
+            case 0: $('#picture').click();return false;
+            case 1: $scope.uploadIcon($rootScope.user_id);
+              return true;
+          }
+        }
+      });
+    };
+
+    //上传头像
+    $scope.uploadIcon = function (user_id) {
+      var s="http://localhost:8080/userImgUpload";
+      var formData = new FormData($('#iconForm')[0]);
+      $.ajax({
+        url: s,  //Server script to process data
+        type: 'POST',
+        data: formData,
+        cache: false,
+        contentType: false,
+        processData: false,
+        success: function(ret){
+          if (ret!=null&&ret!=""){
+            $scope.pic=ret.replace('.','I');
+            $scope.avatar=$scope.pic;
+            $ionicPopup.alert({
+              title: '系统提示',
+              template: '头像上传成功'
+            });
+          }else{
+            $ionicPopup.alert({
+              title: '系统提示',
+              template: '头像上传失败'
+            });
+          }
+        }
+      });
     };
 
     /*菜单栏的固定格式*/{

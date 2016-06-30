@@ -48,6 +48,10 @@ ion-content {
   margin-right: -10%;
 }
 
+.my-hide{
+  display:none;
+}
+
 .my-textarea {
   resize: none;
   width: 100%;
@@ -147,4 +151,12 @@ ion-content {
   border-radius: 50%;
   height: 80px;
   width: 80px;
+}
+
+.my-square{
+  border-radius: 3px;
+  width: 95px;
+  height: 95px;
+  padding: 5px;
+  margin: 5px;
 }

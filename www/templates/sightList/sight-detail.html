@@ -20,7 +20,21 @@
         图片库
       </ion-item>
       <ion-item class="item-text-wrap">
-        {{sight_name}}：图片库
+        <!--<img ng-if="i.resource_type==0"-->
+        <img ng-repeat="i in res"
+             ng-src="http://localhost:8080/{{i.resource_id.replace('I','.')}}"
+             class="my-square my-gray-background"/>
+        <!--<video ng-if="i.resource_type!=0"-->
+               <!--ng-repeat="i in res"-->
+               <!--ng-src="http://localhost:8080/{{i.resource_id.replace('I','.')}}"-->
+               <!--controls="controls"-->
+               <!--class="my-square my-gray-background">-->
+          <!--your browser does not support the video tag-->
+        <!--</video>-->
+        <img class="my-square my-gray-background" src="img/plus.png" ng-click="show()"/>
+        <form id="fileForm" class="my-hide" enctype="multipart/form-data" name="fileForm">
+          <input id="file" class="my-hide" name="file" type="file" />
+        </form>
       </ion-item>
 
       <ion-list class="padding">
