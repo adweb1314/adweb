@@ -1,0 +1,44 @@
+<ion-view id="map" view-title="地点显示">
+  <ion-content>
+
+    <div class="card">
+      <div ng-if="loading" class="item item-text-wrap text-center">
+        读取地图中...
+      </div>
+      <div ng-if="!loading" class="item item-image">
+        <img ng-src="{{realPath}}"/>
+      </div>
+      <!--<div ng-if="!loading" class="item">-->
+        <!--<table class="my-table">-->
+          <!--<tr>-->
+            <!--<th></th>-->
+            <!--<th><span class="broken button button-positive" ng-click="toNorth()">向北</span></th>-->
+            <!--<th></th>-->
+            <!--<th>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</th>-->
+            <!--<th><span class="broken button button-positive" ng-click="toSmall()">缩小</span></th>-->
+          <!--</tr>-->
+          <!--<tr>-->
+            <!--<th><span class="broken button button-positive" ng-click="toWest()">向西</span></th>-->
+            <!--<th></th>-->
+            <!--<th><span class="broken button button-positive" ng-click="toEast()">向东</span></th>-->
+            <!--<th></th>-->
+            <!--<th></th>-->
+          <!--</tr>-->
+          <!--<tr>-->
+            <!--<th></th>-->
+            <!--<th><span class="broken button button-positive" ng-click="toSouth()">向南</span></th>-->
+            <!--<th></th>-->
+            <!--<th></th>-->
+            <!--<th><span class="broken button button-positive" ng-click="toBig()">放大</span></th>-->
+          <!--</tr>-->
+        <!--</table>-->
+      <!--</div>-->
+      <div ng-if="!loading" class="item padding">
+        <button class="button button-positive button-block">确认地点，继续注册</button>
+      </div>
+    </div>
+
+
+
+  </ion-content>
+</ion-view>

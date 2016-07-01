@@ -201,6 +201,18 @@ angular.module('app', ['ionic',
           controller: 'CollectionCtrl'
         }
       }
+    })
+    .state('place', {
+      url: '/place',
+      //cache:'false',
+      templateUrl: 'templates/login/place.html',
+      controller: 'PlaceCtrl'
+    })
+    .state('map', {
+      url: '/map/:latitude/:longitude/:zoom',
+      cache:'false',
+      templateUrl: 'templates/login/map.html',
+      controller: 'MapCtrl'
     });
 
   // if none of the above states are matched, use this as the fallback

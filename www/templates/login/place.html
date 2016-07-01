@@ -1,0 +1,31 @@
+<ion-view view-title="初始地点选择">
+  <ion-content>
+
+    <div id="place-list" class="list list-inset">
+      <label id="place-label" class="item item-input">
+        <i class="icon ion-search placeholder-icon"></i>
+        <input id="place-input" type="text" placeholder="请搜索并选择一个地点">
+      </label>
+      <button id="place-button" class="button button-positive" ng-click="searchPlace()">搜索</button>
+    </div>
+
+    <div class="list">
+      <div class="item" ng-if="hasResult">
+        <span class="input-label">在结果中选择一个地点：</span>
+      </div>
+      <div class="item" ng-if="noResult">
+        <span class="input-label">无搜索结果，请重新输入关键词</span>
+      </div>
+      <div class="item" ng-if="loading">
+        <span class="input-label">搜索中...</span>
+      </div>
+      <ion-item ng-if="position.location.lat!=null" class="item-remove-animate item-icon-right" ng-repeat="position in ret.result" type="item-text-wrap"
+                href="#/map/{{position.location.lat}}/{{position.location.lng}}/15">
+        <h2>{{position.name}}</h2>
+        <div>{{  }}{{position.city}}{{position.district}}</div>
+        <i class="icon ion-chevron-right icon-accessory"></i>
+      </ion-item>
+    </div>
+
+  </ion-content>
+</ion-view>

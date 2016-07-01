@@ -160,3 +160,32 @@ ion-content {
   padding: 5px;
   margin: 5px;
 }
+
+#place-label {
+  padding-bottom: 0;
+  padding-top: 0;
+  border-color: #387ef5;
+  float: left;
+  width:230px;
+  height:47px;
+}
+#place-button {
+  border-radius: 0;
+  padding-left: 1.2em;
+  padding-right: 1.1em;
+  margin: -1px;
+}
+#place-list {
+  width: 300px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#map .card {
+  margin:1em auto 1em auto;
+  max-width: 500px;
+}
+
+#map .my-table {
+  margin:0 auto 0 auto;
+}
