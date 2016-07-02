@@ -20,7 +20,7 @@
         <span class="input-label">搜索中...</span>
       </div>
       <ion-item ng-if="position.location.lat!=null" class="item-remove-animate item-icon-right" ng-repeat="position in ret.result" type="item-text-wrap"
-                href="#/map/{{position.location.lat}}/{{position.location.lng}}/15">
+                href="#/map/{{position.location.lat}}/{{position.location.lng}}/{{position.uid}}">
         <h2>{{position.name}}</h2>
         <div>{{  }}{{position.city}}{{position.district}}</div>
         <i class="icon ion-chevron-right icon-accessory"></i>

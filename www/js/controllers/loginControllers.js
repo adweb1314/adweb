@@ -111,13 +111,13 @@ angular.module('app.loginControllers',[])
     var getMap=function(){
       $scope.loading=true;
       $http.get("http://localhost:8080/adweb_serviceClient/GetStaticMap", {params:{
-          placeId : "location",
+          placeId : $stateParams.tempId,
           latitude : $stateParams.latitude,
           longitude : $stateParams.longitude}})
         .success(function(ret) {
           $scope.loading=false;
           if (ret.flag=="1") {
-            $scope.realPath = "http://localhost:8080/adweb_serviceClient/staticMap_location.png";
+            $scope.realPath = "http://localhost:8080/adweb_serviceClient/staticMap_"+$stateParams.tempId+".png";
           } else {
             $scope.realPath = "";
             $ionicPopup.alert({

@@ -209,7 +209,7 @@ angular.module('app', ['ionic',
       controller: 'PlaceCtrl'
     })
     .state('map', {
-      url: '/map/:latitude/:longitude/:zoom',
+      url: '/map/:latitude/:longitude/:tempId',
       cache:'false',
       templateUrl: 'templates/login/map.html',
       controller: 'MapCtrl'
